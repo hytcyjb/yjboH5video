@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>测试视频触摸</title>
+    <!--<script src='jquery-3.1.1.min.js'></script>-->
+    <script src='jquery-2.1.0.js'></script>
+    <!--字体库：file:///D:/89mc文件/平时文档/download/font_6hm4p5ql8s13jtt9/demo_fontclass.html-->
+    <link rel="stylesheet" type="text/css" href="/css/iconfont.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_zg5rtrimrmvon7b9.css">
+    <script type="text/javascript">
+        window.onload = function () {
+            var video1 = document.getElementById('video1');
+            var video_box = document.getElementById('video_box');
+
+            var outer = document.getElementById('contentDivId');
+            var inner = document.getElementById('contentItemDivId');
+
+            var voiceouter = document.getElementById('voiceDivId');
+            var voiceinner = document.getElementById('voiceItemDivId');
+
+            var firstdownouter = document.getElementById('firstdownDivId');
+
+            video1.controls = false;
+            video1.poster = "http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg";
+            video1.style.width = (video_box.offsetWidth) + 'px';
+            video1.style.height = (video_box.offsetHeight) + 'px';
+            /*alert("===="+video1.style.width +"==="+ (video_box.offsetWidth))
+             alert("===="+video1.style.height +"==="+ (video_box.offsetHeight))*/
+            outer.hidden = false;
+
+            /*这是跳转视频播放进度*/
+            function changeProgress() {
+                outer.addEventListener('touchstart', touchSatrt, false);
+                outer.addEventListener('touchmove', touchMove, false);
+                outer.addEventListener('touchend', touchEnd, false);
+                var disX = 0;
+                var startX,//触摸时的坐标
+//                    startY,
+                    x, //滑动的距离
+//                    y,
+//                    aboveY=0; //设一个全局变量记录上一次内部块滑动的位置
+                    aboveX = 0; //设一个全局变量记录上一次内部块滑动的位置
+
+
+                function touchSatrt(e) {//触摸
+                    e.preventDefault();
+                    var touch = e.touches[0];
+                    //startY = touch.pageY;   //刚触摸时的坐标
+                    startX = touch.pageX;
+                }
+
+                function touchMove(e) {//滑动
+                    e.preventDefault();
+                    var touch = e.touches[0];
+                    // y = touch.pageY - startY;//滑动的距离
+                    x = touch.pageX - startX;
+                    //  inner.style.top=aboveY+y+"px"; //这一句中的aboveY是inner上次滑动后的位置
+                    var finalX = aboveX + x;//最终x轴的坐标
+                    if (finalX < 0) {
+                        finalX == 0;
+                    } else if (x > outer.offsetWidth - inner.offsetWidth) {
+                        finalX == outer.offsetWidth - inner.offsetWidth;
+                    }
+                    inner.style.left = finalX + "px";
+                    /*  /!*设置时间*!/
+                     video1.currentTime = finalX * video1.duration /(outer.offsetWidth - inner.offsetWidth);*/
+                    seektime(finalX, outer.offsetWidth - inner.offsetWidth);
+                }
+
+                function touchEnd(e) {//手指离开屏幕
+                    e.preventDefault();
+                    // aboveY=parseInt(inner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;
+                    aboveX = parseInt(inner.style.left);
+                }//
+            }
+
+            //参考：http://www.cnblogs.com/leinov/p/3701951.html
+            function changeVoice() {
+                //这是调整视频播放音量
+                voiceinner.addEventListener('touchstart', touchSatrt, false);
+                voiceinner.addEventListener('touchmove', touchMove, false);
+                voiceinner.addEventListener('touchend', touchEnd, false);
+                var disX = 0;
+                var startX,//触摸时的坐标
+                    startY,
+                    x, //滑动的距离
+                    y,
+                    aboveY = (voiceouter.offsetHeight - voiceinner.offsetHeight) * (1 - video1.volume); //设一个全局变量记录上一次内部块滑动的位置
+
+                function touchSatrt(e) {//触摸
+                    e.preventDefault();
+                    var touch = e.touches[0];
+                    startY = touch.pageY;   //刚触摸时的坐标
+                }
+
+                function touchMove(e) {//滑动
+                    e.preventDefault();
+                    var touch = e.touches[0];
+                    y = touch.pageY - startY;//滑动的距离
+                    //inner.style.webkitTransform = 'translate(' + 0+ 'px, ' + y + 'px)';  //也可以用css3的方式
+                    var finalY = aboveY + y;
+                    if (finalY < 0) {
+                        finalY = 0;
+                    } else if (finalY > voiceouter.offsetHeight - voiceinner.offsetHeight) {
+                        finalY = voiceouter.offsetHeight - voiceinner.offsetHeight;
+                    }
+                    voiceinner.style.top = finalY + "px"; //这一句中的aboveY是inner上次滑动后的位置
+                    /*注意这个地方进行了方向相减，*/
+                    changeVoiceNum(voiceouter.offsetHeight - voiceinner.offsetHeight - finalY, voiceouter.offsetHeight - voiceinner.offsetHeight);
+
+                }
+
+                /*调节音量*/
+                function changeVoiceNum(currVoice, totalVoice) {
+                    var voiceNum = currVoice / totalVoice;
+                    if (voiceNum > 1) {
+                        video1.volume = 1.0;
+                    } else if (voiceNum < 0) {
+                        video1.volume = 0;
+                    } else {
+                        video1.volume = voiceNum;
+                    }
+//                    console.log(voiceNum);
+                }
+
+                function touchEnd(e) {//手指离开屏幕
+                    e.preventDefault();
+                    aboveY = parseInt(voiceinner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;
+//                    alert("===" + aboveY + "====" + voiceouter.offsetHeight + "====" + voiceinner.offsetHeight + "=----=" + startY)
+                }//
+
+            }
+
+            if (browserRedirect()) {//如果在手机上运行
+                changeProgress();
+                changeVoice();
+            } else if (!browserRedirect()) {//如果再电脑上运行
+                inner.onmousedown = function (ev) {
+                    var ev = ev || window.event;
+                    disX = ev.clientX - inner.offsetLeft;//inner.offsetLeft是初始化时该控件距离左边的距离
+                    console.log("====" + ev.clientX + "=====" + inner.offsetLeft + "=-===" + inner.width + "====" + inner.offsetWidth + "===" + disX)
+                    document.onmousemove = function (ev) {
+                        /* console.log("正在移动");
+                         console.log("111");*/
+                        var ev = ev || window.event;
+                        var finalX = ev.clientX - disX;//最终的x
+                        if (finalX < 0) {
+                            finalX = 0;
+                        } else if (finalX > outer.offsetWidth - inner.offsetWidth) {
+                            finalX = outer.offsetWidth - inner.offsetWidth;
+                        }
+                        inner.style.left = finalX + 'px';
+                        console.log("==11==" + ev.clientX + "====" + inner.offsetLeft + "====" + "====" + finalX);
+
+                    };
+                    document.onmouseup = function () {
+                        /* alert("移动完成");*/
+                        document.onmousemove = null;
+                    };
+                    return false;
+                };
+            }
+            //播放-暂停操作
+            var playId = document.getElementById('playId');
+            var playtime = document.getElementById('playtime');
+            var totaltime = document.getElementById('totaltime');
+            var timer = null;
+            playId.onclick = function () {
+                changeSeekPlay();
+            }
+            /*视频元素加载完之后，进行获取视频的数据---设置总时间长度*/
+            video1.addEventListener("canplay", function () {
+                /*这是 视频的时间进度*/
+                totaltime.value = toCustomTime(Math.floor(video1.duration));
+                /* alert("====" + Math.floor(video1.duration));*/
+                nowtime();
+                /*这是音量键的进度条*/
+                /*这边音量弄错了，应该是手机系统的音量，而不是html的视频音量http://www.cnblogs.com/maxinliang/archive/2013/07/02/3167212.html*/
+                voiceinner.style.top = (voiceouter.offsetHeight - voiceinner.offsetHeight) * (1 - video1.volume) + "px";
+
+                video1.style.width = (video_box.offsetWidth) + 'px';
+                video1.style.height = (video_box.offsetHeight) + 'px';
+                /* alert("=----="+(video1.volume)+"====="+voiceinner.style.top+"===="+(voiceouter.offsetHeight - voiceinner.offsetHeight)*(video1.volume));*/
+            });
+            /*视频加载完成之后得进行提示*/
+            /* video1.addEventListener("",function () {
+             alert("视频播放结束了","是否重新播放？","是","否");
+             })*/
+            video1.onended = function () {
+                if (video1.ended) {
+                }
+                var r = confirm("视频播放结束了，是否重新播放？");
+                if (r == true) {
+                    /*video1.currentTime = 0;*/
+                    seektime(0, 1);
+                }
+                else {
+                    alert("谢谢观看");
+                }
+            }
+            /*播放到什么地方*/
+            function nowtime() {
+                playtime.value = toCustomTime(Math.floor(video1.currentTime));
+                inner.style.left = (video1.currentTime * (outer.offsetWidth - inner.offsetWidth) / video1.duration) + "px";
+            }
+
+            /*拖动进行变化*/
+            function seektime(seeknow, seektotal) {
+                video1.currentTime = seeknow * video1.duration / seektotal;
+                if (!video1.paused) {//先初始化暂停
+                    video1.pause();
+                }
+                changeSeekPlay();
+            }
+
+            /*播放按钮，已经拖动时走这里*/
+            function changeSeekPlay() {
+                if (video1.paused) {
+                    video1.play();
+//                    $("playId").removeClass("playIcon").addClass("pauseIcon");
+                    /*playId.removeClass("playIcon").addClass("pauseIcon");*/
+                    playId.value = "暂停";
+                    nowtime()
+                    timer = setInterval(nowtime, 1000);
+                } else {
+                    video1.pause();
+                    playId.value = "播放";
+//                    playId.removeClass("pauseIcon").addClass("playIcon");
+                    clearInterval(timer);
+                }
+            }
+
+            /*全屏播放功能*/
+            var fullVideoId = document.getElementById('fullVideoId');
+            fullVideoId.onclick = function () {
+                alert("你点击了全屏")
+            }
+            /*点击视频区域，进行显示和隐藏操作*/
+            video1.onclick = function () {
+                alert("===" + video1.style.width + "===" + (video_box.offsetWidth) + 'px' + "===" +
+                    video1.style.height + "===" + (video_box.offsetHeight) + 'px');
+                function hidEle() {
+                    outer.hidden = false;
+                    voiceouter.hidden = false;
+                    firstdownouter.hidden = false;
+                }
+
+                function showEle() {
+                    outer.hidden = true;
+                    voiceouter.hidden = true;
+                    firstdownouter.hidden = true;
+                }
+
+                if (outer.hidden) {
+                    hidEle();
+                } else {//显示之后得定时隐藏
+                    showEle();
+//                    var times = 5 * 100; // 5秒
+//                    var countTime = setInterval(function() {
+//                        times = --times < 0 ? 0 : times;
+//                        if(times == 0) {
+//                            hidEle();
+//                            clearInterval(countTime);
+//                        }
+//                    }, 100);
+                }
+            }
+        }
+
+        /**
+         * 将时间转换为正常时间
+         * */
+        function toCustomTime(number) {
+            number = parseInt(number);
+            var finaltime = "00:00";
+            var hour = 0;
+            var minu = 0;
+            var second = 0;
+            hour = number / 60 / 60;
+            hour = toZero(Math.floor(hour));
+
+            minu = number % 3600 / 60;
+            minu = toZero(Math.floor(minu));
+
+            second = number % 60;
+            second = toZero(Math.floor(second));
+
+            finaltime = hour + ":" + minu + ":" + second;
+            return finaltime;
+        }
+        function toZero(hour) {
+            if (hour < 10) {
+                return "0" + hour;
+            } else {
+                return hour;
+            }
+        }
+        /**
+         *判断是否是通过手机访问
+         */
+        function browserRedirect() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .video {
+        position: relative;
+    }
+
+    .contentDiv {
+        position: absolute;
+        z-index: 1;
+        bottom: 10px;
+        background: #00ffff;
+        width: 100%;
+        height: 3px;
+        overflow: hidden;
+    }
+
+    /* .firstdownDiv {
+         position: absolute;
+         z-index: 1;
+         bottom: 0px;
+         background: #00ffff;
+         width: 100%;
+         height: 10px;
+         overflow: hidden;
+     }*/
+
+    .contentItemDiv {
+        position: relative;
+        z-index: 1;
+        bottom: 0;
+        background: #000fff;
+        width: 30px;
+        height: 10px;
+    }
+
+    .voiceDiv {
+        position: absolute;
+        align-content: center;
+        align-items: center;
+        align-self: center;
+        z-index: 1;
+        top: 20px;
+        right: 20px;
+        background: #00ffff;
+        width: 3px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .voiceItemDiv {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        right: 0px;
+        background: #000fff;
+        width: 10px;
+        height: 30px;
+    }
+
+    .playDiv {
+        position: absolute;
+        z-index: 1;
+        width: 60px;
+        height: 60px;
+        left: 10px;
+        overflow: hidden;
+    }
+
+    .playOtherDiv {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        margin-left: 30px;
+        overflow: hidden;
+    }
+
+    .fullVideoDiv {
+        position: absolute;
+        z-index: 1;
+        width: 60px;
+        height: 60px;
+        right: 10px;
+        overflow: hidden;
+    }
+
+    .iconfont icon-bofang {
+        position: relative;
+        z-index: 1;
+        width: 60px;
+        height: 60px;
+    }
+
+    .playIcon {
+        class: iconfont icon-bofang;
+    }
+
+    .pauseIcon {
+        class: iconfont icon-zanting;
+    }
+</style>
+<div id="video_box" style="width: 100%;height: 242px;position: relative">
+    <!--poster="http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg"-->
+    <video
+            id="video1"
+            controls="controls" preload
+            src="http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4"
+            class="video">
+    </video>
+    <div id="contentDivId" class="contentDiv">
+        <div id="contentItemDivId" class="contentItemDiv"></div>
+    </div>
+    <div id="voiceDivId" class="voiceDiv">
+        <div id="voiceItemDivId" class="voiceItemDiv"></div>
+    </div>
+    <!-- <div id="playDivId" class="playDiv">
+         <i class="iconfont icon-bofang" id="playId"></i>
+     </div>-->
+    <div class="firstdownDiv" id="firstdownDivId"><!--class="playDiv"-->
+        <input type="button" value="播放" id="playId" style=" margin-left: 0px;width: 60px;height:60px;left: 10px; position: absolute;
+        z-index: 1;border:0;">
+        <input type="button" value="00:00:00" id="playtime"
+               style=" margin-left: 100px;width: 60px;height:60px;border:0; background: white">
+        <!--class="playOtherDiv"-->
+        <input type="button" value="/" style=" margin-left: 0px;width: 10px;height:60px;border:0;background: white ">
+        <input type="button" value="00:00:00" id="totaltime"
+               style=" margin-left:0px;width: 60px;height: 60px;border:0;background: white">
+        <input type="button" value="全屏" id="fullVideoId" class="fullVideoDiv">
+    </div>
+    <!-- <div id="fullVideoDivId" class="fullVideoDiv">
+         <i class="iconfont icon-bofang" id="fullVideoId"></i>
+     </div>-->
+</div>
+
+</body>
+</html>

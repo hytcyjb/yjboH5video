@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>yjbo-视频可以1x，2x的速度播放，</title>
+</head>
+<body>
+	<div>视频可以1x，2x的速度播放</div>
+	<video id="video1" src="http://video.89mc.com/bjd/knowledge/video/491b31a8-8198-4662-be92-35f46da17392.mp4" controls width="500px" height:"300px"></video>
+	<button onclick="star()">开始</button><br>
+	<button onclick="stop()">暂停</button><br>
+	<button onclick="getTime()">查看当前时间<input id="time" type="text"></button><br>
+	<button onclick="kuaijin()">快进5s</button><br>
+	<button onclick="houtui()">后退5s</button><br>
+	<button onclick="getspeed()">查看当前速度<input type="text"
+	id="time"></button><br>
+	<button onclick="jiasu()">加速</button><br>
+	<button onclick="jiansu()">减速</button><br>
+	<button onclick="yljia()">音量加</button><br>
+	<button onclick="yljian()">音量减</button><br>
+	
+	<script type="text/javascript">
+	var video1 = document.getElementById('video1')
+	function star(){
+		video1.play();
+	}
+	function stop(){
+		video1.pause();
+	}
+	function getTime(){
+		document.getElementById('time').value=video1.currentTime;
+	}
+	function kuaijin(){
+		video1.currentTime +=5;
+	}
+	function houtui(){
+		video1.currentTime -=5;
+	}
+	function getspeed(){
+		alert(video1.playbackRate)
+	}
+	function jiasu(){
+		video1.playbackRate+=0.1;
+	}
+	function jiansu(){
+		video1.playbackRate-+0.1;
+	}
+	function yljia(){
+		video1.volume+=1;
+	}
+	function yljian(){
+		video1.volume-=1;
+	}
+	</script>
+</body>
+</html>

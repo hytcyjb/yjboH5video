@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<!-- 土豆的flash视频播放  http://www.tudou.com/listplay/M5mzPZx_Rqg/8hhyKS7ekHY/?spm=a2h1r.8267915.m1269.5~5!2~5!2~5~5~A-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>我第一次使用HBuilder软件</title>
+
+</head>
+
+<body>
+<!--<body onload='videoReginsClick("首页哦")'> 这样就直接在body添加了js事件-->
+<script src="test.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="jquery-2.1.0.js">
+
+</script>
+<div id="first" style=" align-content: center; background: #00fff0;
+	width: 100%; height: 500px;  align-items: center; text-align: center; );">
+    <img id="firstImg" onclick="imgClick(src)" src="img/blogger_panda_128px_534223_easyicon.net.png"/>
+    <!--<div id="firstText"  style="background: #f000ff; width: 150px;height: 100%; text-align: center;">我第一次使用HBuilder软件0</div>-->
+    <div id="video_box" style="width: 100%;height: 242px;position: relative">
+        <!-- poster="http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg"-->
+        <video controls="controls" preload
+               id="video0"
+               src="http://video.89mc.com/bjd/knowledge/video/491b31a8-8198-4662-be92-35f46da17392.mp4"
+               onwaiting="waitingClick()" class="video" ontimeupdate="timeupdateClick()"></video>
+    </div>
+
+    <span style="color: rgb(255, 0, 0);">   </span>
+    <div class="video">
+        <video id="media" controls="controls" width="100%" height="242px">
+            <source src="http://video.89mc.com/bjd/knowledge/video/491b31a8-8198-4662-be92-35f46da17392.mp4 "
+                    type="video/mp4 "/>
+            您的浏览器版本太低,请及时更新
+        </video>
+        <!--<a href="http://www.baidu.com " target="_blank " class="skip " onclick="toggleVideo() "></a>-->
+        <!-- 切换清晰度 -->
+        <a class="toggle-btn ">切换至240p</a>
+    </div>
+
+</div>
+<!--		<p style="margin-top: 200px;>视频一当前播放位置： <span id="demo"></span></p>-->
+<div id="demo" style="margin-top: 200px; background: #99ff99;">播放的时间</div>
+<div id="second" onclick="secondClick('1234')" style="margin-top: 20px; background: #99ff99;">替换上面的div</div>
+<div id="third1" onclick="videoClick('1234') " style="margin-top: 20px; background: #29B4ED;">获取视频信息</div>
+<div id="third2" onclick="videoSeekClick('180')">跳到180S处</div>
+<div id="third3" onclick="toggleVideo()">切高清、标清视频</div>
+<div id="third4" onclick="reloadhtml()">给video添加播放、暂停、缓冲事件</div>
+
+<script type="text/javascript">
+    var video1 = document.getElementsByTagName("video")[0];
+    /*html5 video 标签 怎样禁止拖动或者点击进度条 https://zhidao.baidu.com/question/1959286878571632540.html*/
+    /*div设置背景半透明 https://zhidao.baidu.com/question/1817594324651573788.html*/
+//    var maskW = video1.clientWidth;
+//    var maskH = video1.clientHeight;
+//    alert(maskW+"==="+maskH) onclick='videoReplaceClick()'
+
+    var y_mask = "<div  class='masks' style='background: #000000; width:100%;height:100%; position:absolute;z-index:1000000;top:0;left:0;" +
+        "filter:alpha(opacity=50);  /*支持 IE 浏览器*/ -moz-opacity:0.5; /*支持 FireFox 浏览器*/opacity:0.0;  /*支持 Chrome, Opera, Safari 等浏览器*/'>你好吗？</div>";
+    /* video1.parent().append(y_mask) */
+    /* video1.parent().append(y_mask); */
+    var videoJ0 = $("video").eq(0);
+    var videoJ0Par = videoJ0.parent();
+//    video1.height = videoJ0Par.clientHeight;
+//    video1.width = videoJ0Par.clientWidth;
+
+    videoJ0Par.append(y_mask);
+    console.log("=-="+video1.height+"====="+video1.width+"=====");
+   //!* 添加视频控件上的点击事件 *!/
+    $("body").on("click", ".masks", function () {
+        console.log("==000==" + video1.src);
+        /*获取缓存的时间范围 http://www.runoob.com/tags/av-prop-buffered.html  */
+//        console.log("Start: " + video1.buffered.start(0) + " End: " + video1.buffered.end(0));
+        console.log("替换视频标签");
+
+        var message = document.getElementById("video0");
+        if (message == null){//说明替换了，则播放视频
+            var newVideo = document.getElementById("newVideo");
+            newVideo.pause();
+            return;
+        }
+         var para = document.createElement("replaceFirst");
+        //添加 img
+        var videoRep = document.createElement("video");
+        //设置 img 属性，如 id
+        videoRep.setAttribute("id", "newVideo");
+        //设置 img 图片地址
+        videoRep.src = "http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4";
+        videoRep.width = message.videoWidth;
+        videoRep.height = message.videoHeight;
+        videoRep.controls = "controls";
+        //videoRep.poster = message.poster;
+         para.clientWidth = message.videoWidth;
+         para.clientHeight = message.videoHeight;
+         var video1Parent =  $("video").eq(0).parent();
+        console.log("=-="+video1.height+"====="+video1.width+"====="+video1Parent.outerHeight()+"----"+video1Parent.outerWidth()+"====="+video1Parent.innerHeight()+"====="+video1Parent.innerWidth()+"----"+video1Parent.clientHeight
+        +"======"+y_mask.offsetWidth+"===="+y_mask.width+"===="+y_mask.clientHeight+"====" + "-----" + message.width + "=------" + message.height+"==="+
+           message.videoHeight+"==="+message.videoWidth+"------"+message.clientHeight+"==="+message.clientWidth+"=====-----"+message.offsetHeight+"==="+message.offsetWidth+"====")
+        para.appendChild(videoRep);
+        message.parentNode.replaceChild(para, message);
+        //视频控件替换完成,直接可播放
+        var newVideo = document.getElementById("newVideo");
+        newVideo.play();
+
+    })
+
+    $("body").on("click", ".video", function () {
+        alert("==="+video1.height+"===="+video1.height+"===="+video1.currentTime);
+    })
+    /*video1.addEventListener("progress",
+     function() {
+     alert("Downloading video");
+     }
+     );*/
+</script>
+</body>
+
+</html>
