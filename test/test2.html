@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src='../jquery-2.1.0.js'></script>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+
+</head>
+
+<body>
+<script type="text/javascript">
+
+    window.onload = function () {
+        var contentId = document.getElementById("contentId");
+        var helloDiv = document.getElementById("hello_div");
+        var clickCentre = document.getElementById("click_centre");
+        clickCentre.onclick = function () {
+            alert("让其居中");
+            helloDiv.style.lineHeight = 300 + "px";
+            contentId.style.overflow = "hidden";
+        }
+    }
+
+</script>
+<style>
+    .content {
+        width: 400px;
+        height: 300px;
+        background: orange;
+    }
+</style>
+<div class="content" id="contentId">
+    <div id="hello_div" style="text-align: center;background: red">你好</div>
+    <div id="click_centre" style="text-align: center;background: blue">点击让其居中</div>
+</div>
+</body>
+</html>

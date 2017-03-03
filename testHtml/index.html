@@ -5,10 +5,11 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>测试视频触摸</title>
     <!--<script src='jquery-3.1.1.min.js'></script>-->
-    <script src='jquery-2.1.0.js'></script>
+    <script src='../jquery-2.1.0.js'></script>
     <!--字体库：file:///D:/89mc文件/平时文档/download/font_6hm4p5ql8s13jtt9/demo_fontclass.html-->
-    <link rel="stylesheet" type="text/css" href="/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_zg5rtrimrmvon7b9.css">
+
     <script type="text/javascript">
         window.onload = function () {
             var video1 = document.getElementById('video1');
@@ -22,13 +23,19 @@
 
             var firstdownouter = document.getElementById('firstdownDivId');
 
+            /*yjbo 这个得根据自己的尺寸计算*/
+//            video_box.style.width = (350) + 'px';
+//            video_box.style.height = (500) + 'px';
+
             video1.controls = false;
             video1.poster = "http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg";
+
             video1.style.width = (video_box.offsetWidth) + 'px';
             video1.style.height = (video_box.offsetHeight) + 'px';
+//            video_box.style.width = (video1.offsetWidth) + 'px';
+//            video_box.style.height = (video1.offsetHeight) + 'px';
             /*alert("===="+video1.style.width +"==="+ (video_box.offsetWidth))
              alert("===="+video1.style.height +"==="+ (video_box.offsetHeight))*/
-            outer.hidden = false;
 
             /*这是跳转视频播放进度*/
             function changeProgress() {
@@ -166,14 +173,20 @@
             var playId = document.getElementById('playId');
             var playtime = document.getElementById('playtime');
             var totaltime = document.getElementById('totaltime');
-            var timer = null;
+            var fullVideoId = document.getElementById('fullVideoId');
+            var progressTextId = document.getElementById('progressTextId');
+            var fgf_div = document.getElementById('fgf_div');
+            var timer = null;//播放的一秒刷新一次
+            var timerdjs = null;//播放时倒计时几秒钟把页面去掉
             playId.onclick = function () {
                 changeSeekPlay();
             }
             /*视频元素加载完之后，进行获取视频的数据---设置总时间长度*/
             video1.addEventListener("canplay", function () {
+                /*  playId.className = 'playIcon';*/
                 /*这是 视频的时间进度*/
-                totaltime.value = toCustomTime(Math.floor(video1.duration));
+                totaltime.innerHTML = toCustomTime(Math.floor(video1.duration));
+                progressTextId.hidden = true;
                 /* alert("====" + Math.floor(video1.duration));*/
                 nowtime();
                 /*这是音量键的进度条*/
@@ -182,6 +195,7 @@
 
                 video1.style.width = (video_box.offsetWidth) + 'px';
                 video1.style.height = (video_box.offsetHeight) + 'px';
+                /*alert("==="+playId.offsetHeight+"===="+fgf_div.offsetHeight+"===="+playtime.offsetHeight+"=-==="+playtime.height)*/
                 /* alert("=----="+(video1.volume)+"====="+voiceinner.style.top+"===="+(voiceouter.offsetHeight - voiceinner.offsetHeight)*(video1.volume));*/
             });
             /*视频加载完成之后得进行提示*/
@@ -189,20 +203,27 @@
              alert("视频播放结束了","是否重新播放？","是","否");
              })*/
             video1.onended = function () {
-                if (video1.ended) {
-                }
-                var r = confirm("视频播放结束了，是否重新播放？");
+                var r = confirm("谢谢观看" + "<br />" + "视频播放结束了，是否重新播放？");
                 if (r == true) {
                     /*video1.currentTime = 0;*/
                     seektime(0, 1);
                 }
                 else {
-                    alert("谢谢观看");
+//                    alert("谢谢观看");
                 }
+            }
+            video1.onwaiting = function () {//视频正在缓冲中
+                progressTextId.hidden = false;
+                progressTextId.innerHTML = "正在加载中...";
+
+            }
+            video1.onplaying = function () {//视频缓冲结束，播放了
+                progressTextId.innerHTML = "加载完成";
+                progressTextId.hidden = true;
             }
             /*播放到什么地方*/
             function nowtime() {
-                playtime.value = toCustomTime(Math.floor(video1.currentTime));
+                playtime.innerHTML = toCustomTime(Math.floor(video1.currentTime));
                 inner.style.left = (video1.currentTime * (outer.offsetWidth - inner.offsetWidth) / video1.duration) + "px";
             }
 
@@ -215,48 +236,46 @@
                 changeSeekPlay();
             }
 
+            /* $(document).ready(function(){
+             $(playId).click(function(){
+             $(playId).className = "iconfont icon-zanting";
+             $(playId).class = "iconfont icon-zanting";
+             /!*$(playId).removeClass("playIcon");*!/
+             });
+             });*/
             /*播放按钮，已经拖动时走这里*/
             function changeSeekPlay() {
                 if (video1.paused) {
                     video1.play();
 //                    $("playId").removeClass("playIcon").addClass("pauseIcon");
                     /*playId.removeClass("playIcon").addClass("pauseIcon");*/
-                    playId.value = "暂停";
+                    /* playId.innerHTML = "暂停";*/
+                    $(playId).removeClass("iconfont icon-bofang").addClass("iconfont icon-zanting");
+                    /* playId.className = "pauseIcon";*/
+                    /* class: iconfont icon-bofang;
+                     class: iconfont icon-zanting;*/
                     nowtime()
                     timer = setInterval(nowtime, 1000);
                 } else {
                     video1.pause();
-                    playId.value = "播放";
+                    /* playId.innerHTML = "播放";*/
+                    $(playId).removeClass("iconfont icon-zanting").addClass("iconfont icon-bofang");
+                    /* playId.className = "playIcon";*/
 //                    playId.removeClass("pauseIcon").addClass("playIcon");
                     clearInterval(timer);
                 }
             }
 
             /*全屏播放功能*/
-            var fullVideoId = document.getElementById('fullVideoId');
             fullVideoId.onclick = function () {
                 alert("你点击了全屏")
             }
             /*点击视频区域，进行显示和隐藏操作*/
             video1.onclick = function () {
-                alert("===" + video1.style.width + "===" + (video_box.offsetWidth) + 'px' + "===" +
-                    video1.style.height + "===" + (video_box.offsetHeight) + 'px');
-                function hidEle() {
-                    outer.hidden = false;
-                    voiceouter.hidden = false;
-                    firstdownouter.hidden = false;
-                }
+//                alert("===" + video1.style.width + "===" + (video_box.offsetWidth) + 'px' + "===" +
+//                    video1.style.height + "===" + (video_box.offsetHeight) + 'px');
+                shouHidBuju();
 
-                function showEle() {
-                    outer.hidden = true;
-                    voiceouter.hidden = true;
-                    firstdownouter.hidden = true;
-                }
-
-                if (outer.hidden) {
-                    hidEle();
-                } else {//显示之后得定时隐藏
-                    showEle();
 //                    var times = 5 * 100; // 5秒
 //                    var countTime = setInterval(function() {
 //                        times = --times < 0 ? 0 : times;
@@ -265,10 +284,40 @@
 //                            clearInterval(countTime);
 //                        }
 //                    }, 100);
+
+            }
+
+            function shouHidBuju() {
+                if (!outer.hidden) {
+                    hidEle();
+                } else {//显示之后得定时隐藏
+                    showEle();
+                    var times = 3; // 5秒
+                    clearInterval(timerdjs);
+                    timerdjs = setInterval(function () {
+                        times = --times < 0 ? 0 : times;
+                        if (times == 0) {
+                            hidEle();
+                            /*alert("应该隐藏元素了")*/
+                            clearInterval(timerdjs);
+                        }
+                    }, 1000)//每次1s更新一次
                 }
             }
-        }
 
+            function hidEle() {
+                outer.hidden = true;
+                voiceouter.hidden = true;
+                firstdownouter.hidden = true;
+            }
+
+            function showEle() {
+                outer.hidden = false;
+                voiceouter.hidden = false;
+                firstdownouter.hidden = false;
+
+            }
+        }
         /**
          * 将时间转换为正常时间
          * */
@@ -319,7 +368,7 @@
     </script>
 </head>
 <body>
-<style>
+<style type="text/css">
 
     * {
         margin: 0;
@@ -333,22 +382,15 @@
     .contentDiv {
         position: absolute;
         z-index: 1;
-        bottom: 10px;
+        bottom: 25px;
+        left: 10px;
+        right: 10px;
         background: #00ffff;
         width: 100%;
-        height: 3px;
+        height: 10px;
         overflow: hidden;
-    }
 
-    /* .firstdownDiv {
-         position: absolute;
-         z-index: 1;
-         bottom: 0px;
-         background: #00ffff;
-         width: 100%;
-         height: 10px;
-         overflow: hidden;
-     }*/
+    }
 
     .contentItemDiv {
         position: relative;
@@ -356,60 +398,44 @@
         bottom: 0;
         background: #000fff;
         width: 30px;
-        height: 10px;
+        height: 30px;
     }
 
     .voiceDiv {
         position: absolute;
-        align-content: center;
-        align-items: center;
-        align-self: center;
         z-index: 1;
-        top: 20px;
+        bottom: 50px;
         right: 20px;
-        background: #00ffff;
-        width: 3px;
-        height: 100%;
+        background: greenyellow;
+        width: 30px;
+        height: 150px;
         overflow: hidden;
     }
 
     .voiceItemDiv {
         position: absolute;
         z-index: 1;
-        bottom: 0;
-        right: 0px;
         background: #000fff;
-        width: 10px;
+        width: 30px;
         height: 30px;
-    }
-
-    .playDiv {
-        position: absolute;
-        z-index: 1;
-        width: 60px;
-        height: 60px;
-        left: 10px;
-        overflow: hidden;
-    }
-
-    .playOtherDiv {
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        margin-left: 30px;
-        overflow: hidden;
     }
 
     .fullVideoDiv {
         position: absolute;
         z-index: 1;
-        width: 60px;
-        height: 60px;
-        right: 10px;
+        right: 0px;
         overflow: hidden;
+        text-align: center; /*//文字在标签内居中*/
     }
 
-    .iconfont icon-bofang {
+    /*.iconfont icon-bofang {*/
+    /*position: relative;*/
+    /*z-index: 1;*/
+    /*width: 60px;*/
+    /*height: 60px;*/
+    /*}*/
+
+    .iconfont icon-zanting {
         position: relative;
         z-index: 1;
         width: 60px;
@@ -417,20 +443,22 @@
     }
 
     .playIcon {
-        class: iconfont icon-bofang;
+        class: "iconfont icon-bofang";
     }
 
     .pauseIcon {
-        class: iconfont icon-zanting;
+        class: "iconfont icon-zanting";
     }
 </style>
-<div id="video_box" style="width: 100%;height: 242px;position: relative;vertical-align: middle;border:0; margin: 0 auto;">
+<div id="video_box"
+     style="height: 242px;position: relative;vertical-align: middle;
+     border:0; margin: 0 auto; text-align:center;background: black;">
     <!--poster="http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg"-->
     <video
             id="video1"
             controls="controls" preload
             src="http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4"
-            class="video">
+            class="video;visibility: hidden">
     </video>
     <div id="contentDivId" class="contentDiv">
         <div id="contentItemDivId" class="contentItemDiv"></div>
@@ -438,29 +466,33 @@
     <div id="voiceDivId" class="voiceDiv">
         <div id="voiceItemDivId" class="voiceItemDiv"></div>
     </div>
-    <!-- <div id="playDivId" class="playDiv">
-         <i class="iconfont icon-bofang" id="playId"></i>
-     </div>-->
-    <div class="firstdownDiv" id="firstdownDivId"><!--class="playDiv"-->
-        <input type="button" value="播放" id="playId" style=" margin-left: 0px;width: 60px;height:60px;left: 10px; position: absolute;
-        z-index: 1;border:0;">
-        <input type="button" value="00:00:00" id="playtime"
-               style=" margin-left: 100px;width: 60px;height:60px;border:0; background: white">
+    <!--如果想div的宽度适配文字的长度，则去掉该属性即可-->
+    <div class="firstdownDiv" id="firstdownDivId" style="background: red;bottom: 25px;z-index: 2;position: relative;">
+        <!--class="playDiv"-->
+
+        <div id="playId" class="iconfont icon-bofang" style=" margin-left: 21px; position: relative;float:left;bottom: 0px;z-index: 2;background: yellow;
+        "></div><!--播放-->
+        <div id="playtime"
+             style=" margin-left: 5px;position: relative;float:left;z-index: 2;bottom: 0px;background: yellow;" ;>
+            00:00:00
+        </div>
         <!--class="playOtherDiv"-->
-        <input type="button" value="/" style=" margin-left: 0px;width: 10px;height:60px;border:0;background: white ">
-        <input type="button" value="00:00:00" id="totaltime"
-               style=" margin-left:0px;width: 60px;height: 60px;border:0;background: white">
-        <input type="button" value="全屏" id="fullVideoId" class="fullVideoDiv">
+        <div id="fgf_div"
+             style=" margin-left: 5px;position: relative;float:left;bottom: 0px;z-index: 2;background: yellow;" ;>/
+        </div>
+        <div id="totaltime"
+             style=" margin-left:5px;text-align: center;position: relative;float:left;bottom: 0px;z-index: 2;background: yellow;"
+             ;>00:00:00
+        </div>
+        <div id="fullVideoId" class="iconfont icon-quanping" style="position: relative;
+       right: 20px;overflow: hidden;bottom: 0px;z-index: 2;background: yellow;float:right;"></div>
     </div>
-    <input type="button" value="播放" id="playCentreId" style=" margin-left: 0px;width: 60px;height:60px;
-            left: 10px; position: relative;align-content: center; z-index: 1;">
-    <input type="button" value="播放" id="playCentreId1" style=" margin-left: 0px;width: 60px;height:60px;
-            left: 10px; position: relative;align-self: center; z-index: 1;border:0;">
-    <input type="button" value="播放" id="playCentreId2" style=" width: 60px;height:60px;
-            left: 10px; position: relative;z-index: 1;border:0;display:table-cell;" >
-    <!-- <div id="fullVideoDivId" class="fullVideoDiv">
-         <i class="iconfont icon-bofang" id="fullVideoId"></i>
-     </div>-->
+
+
+    <div id="progressTextId" style=" background: chartreuse; text-align:center;align-content: center;bottom: 125px;margin-left: -20px;
+            position: relative;z-index: 2;visibility: hidden" >显示加载情况
+    </div>
+
 </div>
 
 </body>
