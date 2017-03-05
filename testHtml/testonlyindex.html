@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>测试视频触摸</title>
+    <!--<script src='jquery-3.1.1.min.js'></script>-->
+    <script src='../jquery-2.1.0.js'></script>
+    <!--字体库：file:///D:/89mc文件/平时文档/download/font_6hm4p5ql8s13jtt9/demo_fontclass.html-->
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_zg5rtrimrmvon7b9.css">
+</head>
+<body>
+<script type="text/javascript">
+    window.onload = function () {
+        var videoClick = document.getElementById("video1");
+        var playIdClick = document.getElementById("playId");
+        playIdClick.onclick = function () {
+            videoClick.play();
+        }
+    }
+
+</script>
+<style type="text/css">
+    * {margin: 0;padding: 0;}
+    .video{ width: 100%;height: 245px;background: green;position: absolute; }
+    .contentDiv {bottom: 5px;background: #00ffff;width: 80%; height: 10px;overflow: hidden;margin: 0 0 0 20px}
+    .contentItemDiv {position: relative;bottom: 0;background: #000fff;width: 30px;height: 30px;}
+    .voiceDiv {position: absolute;bottom: 50px;right: 20px;background: greenyellow;width: 30px;
+        height: 150px;overflow: hidden;}
+    .voiceItemDiv {position: absolute;background: #000fff;width: 30px;height: 30px;}
+    .iconfont icon-zanting {position: relative;width: 60px;height: 60px; }
+</style>
+<div id="video_box" style="height: 245px;background: red;padding: 0 0px; ">
+    <video
+            id="video1" preload src="http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4"
+            poster = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489288875&di=c25af3ef4886eb3a20aa4e9bb1817824&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F15%2F62%2F29%2F07k58PICEPT_1024.jpg"
+            class="video"></video>
+    <div id="voiceDivId" class="voiceDiv">
+        <div id="voiceItemDivId" class="voiceItemDiv"></div>
+    </div>
+    <!--如果想div的宽度适配文字的长度，则去掉该属性即可-->
+    <div  id="firstdownDivId" style="height: 50px;width: 100% ;background: pink; position: absolute; bottom: 10px">
+
+        <div id="contentDivId" class="contentDiv">
+            <div id="contentItemDivId" class="contentItemDiv"></div>
+        </div>
+
+        <div id="playId" class="iconfont icon-bofang" style="  float:left; bottom: 0px;background: yellow;"></div>
+        <div id="playtime"
+             style=" margin-left: 5px;float:left;bottom: 0px;background: yellow;";>
+            00:00:00
+        </div>
+        <div id="fgf_div"
+             style=" margin-left: 5px;float:left;bottom: 0px;background: yellow;" ;>/
+        </div>
+        <div id="totaltime"
+             style=" margin-left:5px;text-align: center;float:left;bottom: 0px;background: yellow;";>
+            00:00:00
+        </div>
+        <div id="fullVideoId" class="iconfont icon-quanping" style="right: 0px;padding-left: 11px;padding-right: 10px;
+            overflow: hidden;bottom: 0px;background: yellow;float:right;">
+        </div>
+    </div>
+    <div id="progressTextId" style=" background: chartreuse; text-align:center;align-content: center;bottom: 125px;margin-left: -20px;
+            visibility: hidden" >显示加载情况
+    </div>
+</div>
+
+</body>
+</html>
