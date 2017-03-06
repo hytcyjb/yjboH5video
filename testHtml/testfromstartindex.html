@@ -16,21 +16,21 @@
     window.onload = function () {
         var  videoBox = document.getElementById("video_box");
         var videoId = document.getElementById("video_id");
-        var progressBox = document.getElementById("progress_box");
+        var footer = document.getElementById("footer");
         var backId = document.getElementById("back_id");
         var progressImg = document.getElementById("progress_img");
 
         //算法
         var vidBoxW = videoBox.width || videoBox.offsetWidth || videoBox.clientWidth || videoBox.scrollWidth;//取第一个
         videoId.style.width = vidBoxW - 20 +"px";
-        var wid = progressBox.style.width || progressBox.width || progressBox.offsetWidth || progressBox.clientWidth || progressBox.scrollWidth + videoBox.border.width;
+        var wid = footer.style.width || footer.width || footer.offsetWidth || footer.clientWidth || footer.scrollWidth + videoBox.border.width;
         var  test = 10;
         
         
         //点击事件
         backId.onclick = function () {
-            progressImg.style.left = progressImg.style.left +5;
-            
+            progressImg.style.left = progressImg.style.left + progressImg.style.width + 5 ;
+
         }
     }
 </script>
