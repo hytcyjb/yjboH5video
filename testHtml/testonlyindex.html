@@ -3,49 +3,147 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>从头开始测试</title>
+    <title>从样式开始测试</title>
     <!--<script src='jquery-3.1.1.min.js'></script>-->
     <script src='../jquery-2.1.0.js'></script>
     <!--字体库：file:///D:/89mc文件/平时文档/download/font_6hm4p5ql8s13jtt9/demo_fontclass.html-->
     <link rel="stylesheet" type="text/css" href="../css/iconfont.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_zg5rtrimrmvon7b9.css">
 </head>
-<body>
-
+<body >
 <script type="text/javascript">
+
     window.onload = function () {
+
         var  videoBox = document.getElementById("video_box");
         var videoId = document.getElementById("video_id");
-        var progressBox = document.getElementById("progress_box");
+        var progressLine = document.getElementById("progress_line");
         var backId = document.getElementById("back_id");
         var progressImg = document.getElementById("progress_img");
+        var header = document.getElementById("header");
+        var footer = document.getElementById("footer");
+        var playId = document.getElementById("play_id");
+        var fullId = document.getElementById("full_id");
+
+        var screenW = document.documentElement.clientWidth;
+        var screenH =  document.documentElement.clientHeight;
+        //alert("屏幕的宽度==="+screenW +"===="+ screenH);
+
+        changeVideoW(screenW);
 
         //算法
         var vidBoxW = videoBox.width || videoBox.offsetWidth || videoBox.clientWidth || videoBox.scrollWidth;//取第一个
         videoId.style.width = vidBoxW - 20 +"px";
-        var wid = progressBox.style.width || progressBox.width || progressBox.offsetWidth || progressBox.clientWidth || progressBox.scrollWidth + videoBox.border.width;
-        var  test = 10;
-        
-        
+
+        /*var wid = progressBox.style.width || progressBox.width || progressBox.offsetWidth || progressBox.clientWidth || progressBox.scrollWidth + videoBox.border.width;*/
+        var  test = progressImg.offsetLeft;
+        var total = progressLine.offsetWidth + progressImg.offsetLeft;
+
         //点击事件
         backId.onclick = function () {
-            progressImg.style.left = progressImg.style.left +5;
-            
+            test = test+5;
+            if (test > total){               test = 0;            }
+            progressImg.style.left = test +"px";
+        }
+        playId.onclick = function () {
+            //头尾布局隐藏;
+            if (header.hidden){
+                header.hidden = false;
+                footer.hidden =  false;
+            }else {
+                header.hidden = true;
+                footer.hidden =  true;
+            }
+        }
+        fullId.onclick = function () {
+            changeVideoH(screenH);
+        }
+
+        window.addEventListener('orientationchange', function(event){
+            //第一次不调用事件，之和调用事件
+            if ( window.orientation == 180 || window.orientation==0 ) {
+                alert("竖屏");
+                //changeOriP(screenH,screenW)
+                changeVideoW(screenW);
+            }
+            if( window.orientation == 90 || window.orientation == -90 ) {
+                alert("横屏==="+screenH+"===="+screenW);
+                changeOriL(screenH,screenW)
+            }
+        });
+
+        /***
+         * 竖屏时
+         * 通过获取手机的尺寸以此设置视频的宽度；
+         * @author yjbo
+         */
+        function changeVideoW(screenW) {
+            //根据屏幕进行尺寸配置
+            videoBox.style.width = screenW - 2 +"px";//2是边框的宽度左右2边之和
+            header.style.width = screenW -2 +"px";//2是边框的宽度左右2边之和
+            footer.style.width = screenW  -2 +"px";//2是边框的宽度左右2边之和
+            progressLine.style.width = screenW - progressLine.offsetLeft * 2 +"px";
+        }
+        /***
+         * 竖屏
+         * 设置视频的全屏模式的高度；
+         * @author yjbo
+         */
+        function changeVideoH(screenH) {
+            //根据屏幕进行尺寸配置
+            videoBox.style.height = screenH+"px";
+            videoId.style.height = screenH - videoId.offsetLeft * 2 +"px";
+        }
+        /***
+         * 横屏时：(横竖屏切换)
+         *
+         * 设置视频的全屏模式的高度，宽度；
+         * @author yjbo
+         */
+        function changeOriL(screenH,screenW) {
+            //根据屏幕进行尺寸配置
+            videoBox.style.width = screenH - 2 +"px";//2是边框的宽度左右2边之和
+            header.style.width = screenH -2 +"px";//2是边框的宽度左右2边之和
+            footer.style.width = screenH  -2 +"px";//2是边框的宽度左右2边之和
+            progressLine.style.width = screenH - progressLine.offsetLeft * 2 +"px";
+            videoBox.style.height = screenW +"px";
+
+        }
+        /***
+         * 竖屏时：(横竖屏切换)
+         *
+         * 设置视频的全屏模式的高度，宽度；
+         * @author yjbo
+         */
+        function changeOriP(screenH,screenW) {
+            //根据屏幕进行尺寸配置
+            videoBox.style.width = screenW+"px";
+            videoBox.style.height = screenH+"px";
+            videoId.style.height = screenW - videoId.offsetLeft * 2 +"px";
         }
     }
+
 </script>
 <style type="text/css">
     * {margin: 0;padding: 0;}
-    #video_box{height: 240px; width: 358px; background: red;border: 1px solid #000000;position:absolute; }
-    #video_id{ height:  220px;background: green;margin:  10px 10px;}/*width: 338px;*/
-    #header{ width: 360px;background: black;position: absolute;top: 0px;}
-    #footer{ height: 50px;width: 360px;background: black;position: absolute;bottom: 0px;}
-    #progress_line{ height: 5px;width: 340px;background: gray; margin:  5px 10px;position: absolute}
+    #video_box{height: 240px;  background: red;border: 1px solid #000000;position:absolute; }/*width: 391px;*/
+    #video_id{ height:  220px;background: green;margin:  10px 10px;}
+    #header{ background: black;position: absolute;top: 0px;}/*width: 391px;*/
+    #footer{ height: 50px;background: black;position: absolute;bottom: 0px;}/*width: 391px;*/
+    #progress_line{ height: 5px;background: gray; margin:  7px 10px;position: absolute}/*width: 373px;*/
     #progress_img{ height: 15px;width: 15px;left: 0px;position: absolute;margin:  -5px -5px;}
     #play_id{ color: red; float: left;padding: 5px;}
 
+    /*@media all and (orientation : landscape) {
+        h2{color:red;}!*横屏时字体红色*!
+    }
+    @media all and (orientation : portrait){
+        h2{color:green;}!*竖屏时字体绿色*!
+    }*/
+
 </style>
-<div id="video_box" >
+
+<div id="video_box" style="overflow: hidden;background: red">
     <video
             id="video_id" preload src="http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4"
             poster = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489288875&di=c25af3ef4886eb3a20aa4e9bb1817824&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F15%2F62%2F29%2F07k58PICEPT_1024.jpg"
@@ -68,6 +166,5 @@
     </div>
 
 </div>
-
 </body>
 </html>
