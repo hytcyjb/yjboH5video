@@ -27,24 +27,11 @@
 
         var screenW = document.documentElement.clientWidth;
         var screenH =  document.documentElement.clientHeight;
-        //alert("屏幕的宽度==="+screenW +"===="+ screenH);
+        alert("竖屏=0=="+screenH+"===="+screenW);//588--393  636-393  660 393
+        changeVideoW();
+        otherCaulue();
 
-        changeVideoW(screenW);
 
-        //算法
-        var vidBoxW = videoBox.width || videoBox.offsetWidth || videoBox.clientWidth || videoBox.scrollWidth;//取第一个
-        videoId.style.width = vidBoxW - 20 +"px";
-
-        /*var wid = progressBox.style.width || progressBox.width || progressBox.offsetWidth || progressBox.clientWidth || progressBox.scrollWidth + videoBox.border.width;*/
-        var  test = progressImg.offsetLeft;
-        var total = progressLine.offsetWidth + progressImg.offsetLeft;
-
-        //点击事件
-        backId.onclick = function () {
-            test = test+5;
-            if (test > total){               test = 0;            }
-            progressImg.style.left = test +"px";
-        }
         playId.onclick = function () {
             //头尾布局隐藏;
             if (header.hidden){
@@ -56,43 +43,87 @@
             }
         }
         fullId.onclick = function () {
-            changeVideoH(screenH);
+            if ("全屏" == fullId.innerHTML){
+                fullId.innerHTML = "小屏";
+                changeVideoH();
+            }else if ("小屏" == fullId.innerHTML){
+                fullId.innerHTML = "全屏";
+                changeVideoS();
+            }
+
         }
 
         window.addEventListener('orientationchange', function(event){
             //第一次不调用事件，之和调用事件
             if ( window.orientation == 180 || window.orientation==0 ) {
-                alert("竖屏");
+
+//                screenW = document.documentElement.clientHeight;//获取的值得调换
+//                 screenH =  document.documentElement.clientWidth;
+                screenW = 393;
+                 screenH = 660;
+                alert("竖屏==="+screenH+"===="+screenW);//321--663  663-369
                 //changeOriP(screenH,screenW)
-                changeVideoW(screenW);
+                changeVideoH();
+                changeVideoW();
+                otherCaulue();
             }
             if( window.orientation == 90 || window.orientation == -90 ) {
-                alert("横屏==="+screenH+"===="+screenW);
-                changeOriL(screenH,screenW)
+
+                screenW = 660//获取的值得调换
+                screenH =  393;
+                alert("横屏==="+screenH+"===="+screenW);//591-393  393-639
+                fullId.innerHTML = "小屏";
+//                changeOriL();
+                changeVideoH();
+                changeVideoW();
+                otherCaulue();
             }
         });
 
         /***
-         * 竖屏时
+         * 竖屏时获取手机的长和宽
          * 通过获取手机的尺寸以此设置视频的宽度；
          * @author yjbo
          */
-        function changeVideoW(screenW) {
+        function changeVideoW() {
             //根据屏幕进行尺寸配置
             videoBox.style.width = screenW - 2 +"px";//2是边框的宽度左右2边之和
             header.style.width = screenW -2 +"px";//2是边框的宽度左右2边之和
             footer.style.width = screenW  -2 +"px";//2是边框的宽度左右2边之和
             progressLine.style.width = screenW - progressLine.offsetLeft * 2 +"px";
+
         }
         /***
-         * 竖屏
+         * 竖屏的大屏---竖屏使用1
          * 设置视频的全屏模式的高度；
          * @author yjbo
          */
-        function changeVideoH(screenH) {
+        function changeVideoH() {
             //根据屏幕进行尺寸配置
             videoBox.style.height = screenH+"px";
             videoId.style.height = screenH - videoId.offsetLeft * 2 +"px";
+        }
+        /***
+         * 竖屏的大屏---横屏使用2
+         * 设置视频的全屏模式的高度；
+         * @author yjbo
+         */
+        function changeVideoH2() {
+            //根据屏幕进行尺寸配置
+            videoBox.style.height = screenH+"px";//这里得减去手机的状态栏的宽度，高度
+            videoId.style.height = screenH +"px";
+        }
+        /***
+         * 竖屏的小屏
+         * 设置视频的全屏模式的高度；
+         * @author yjbo
+         */
+        function changeVideoS() {
+            //根据屏幕进行尺寸配置
+            videoBox.style.height = 240+"px";
+            videoId.style.height = 220 +"px";
+            changeVideoW();
+            otherCaulue();
         }
         /***
          * 横屏时：(横竖屏切换)
@@ -100,26 +131,46 @@
          * 设置视频的全屏模式的高度，宽度；
          * @author yjbo
          */
-        function changeOriL(screenH,screenW) {
+        function changeOriL() {
             //根据屏幕进行尺寸配置
-            videoBox.style.width = screenH - 2 +"px";//2是边框的宽度左右2边之和
-            header.style.width = screenH -2 +"px";//2是边框的宽度左右2边之和
-            footer.style.width = screenH  -2 +"px";//2是边框的宽度左右2边之和
-            progressLine.style.width = screenH - progressLine.offsetLeft * 2 +"px";
-            videoBox.style.height = screenW +"px";
-
+            videoBox.style.width =  screenW - 2 +"px";//2是边框的宽度左右2边之和
+            header.style.width = screenW -2 +"px";//2是边框的宽度左右2边之和
+            footer.style.width = screenW  -2 +"px";//2是边框的宽度左右2边之和
+            progressLine.style.width = screenW - progressLine.offsetLeft * 2 +"px";
+            videoBox.style.height = screenH +"px";
+            videoId.style
         }
-        /***
-         * 竖屏时：(横竖屏切换)
-         *
-         * 设置视频的全屏模式的高度，宽度；
-         * @author yjbo
-         */
-        function changeOriP(screenH,screenW) {
-            //根据屏幕进行尺寸配置
-            videoBox.style.width = screenW+"px";
-            videoBox.style.height = screenH+"px";
-            videoId.style.height = screenW - videoId.offsetLeft * 2 +"px";
+//        /***
+//         * 竖屏时：(横竖屏切换)
+//         *
+//         * 设置视频的全屏模式的高度，宽度；
+//         * @author yjbo
+//         */
+//        function changeOriL() {
+//            //根据屏幕进行尺寸配置
+//            videoBox.style.width = screenH - 2 +"px";//2是边框的宽度左右2边之和
+//            header.style.width = screenH -2 +"px";//2是边框的宽度左右2边之和
+//            footer.style.width = screenH  -2 +"px";//2是边框的宽度左右2边之和
+//            progressLine.style.width = screenH - progressLine.offsetLeft * 2 +"px";
+//            videoBox.style.height = screenW +"px";
+//
+//        }
+        var  test;
+        var  total;
+        function otherCaulue() {
+            //算法
+            var vidBoxW = videoBox.width || videoBox.offsetWidth || videoBox.clientWidth || videoBox.scrollWidth;//取第一个
+            videoId.style.width = vidBoxW - 20 +"px";
+            /*var wid = progressBox.style.width || progressBox.width || progressBox.offsetWidth || progressBox.clientWidth || progressBox.scrollWidth + videoBox.border.width;*/
+              test = progressImg.offsetLeft;
+             total = progressLine.offsetWidth + progressImg.offsetLeft;
+        }
+
+        //点击事件
+        backId.onclick = function () {
+            test = test+5;
+            if (test > total){               test = 0;            }
+            progressImg.style.left = test +"px";
         }
     }
 
