@@ -56,11 +56,10 @@
         window.addEventListener('orientationchange', function(event){
             //第一次不调用事件，之和调用事件
             if ( window.orientation == 180 || window.orientation==0 ) {
-
-//                screenW = document.documentElement.clientHeight;//获取的值得调换
-//                 screenH =  document.documentElement.clientWidth;
-                screenW = 393;
-                 screenH = 660;
+                screenW = screenW;
+                 screenH = screenH;
+//                screenW = 393;
+//                 screenH = 660;
                 alert("竖屏==="+screenH+"===="+screenW);//321--663  663-369
                 //changeOriP(screenH,screenW)
                 fullId.hidden = false;
@@ -70,8 +69,10 @@
             }
             if( window.orientation == 90 || window.orientation == -90 ) {
 
-                screenW = 660//获取的值得调换
-                screenH =  393;
+                screenW = screenH+2;//获取的值得调换--减去边框的间距
+                screenH =  screenW+1;//减去边框的间距
+//                screenW = 662//获取的值得调换--减去边框的间距
+//                screenH =  391;//减去边框的间距
                 alert("横屏==="+screenH+"===="+screenW);//591-393  393-639
                 fullId.innerHTML = "小屏";
                 fullId.hidden = true;
