@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>从样式开始测试</title>
+    <title>从样式开始测试00</title>
     <!--<script src='jquery-3.1.1.min.js'></script>-->
     <script src='../jquery-2.1.0.js'></script>
     <!--字体库：file:///D:/89mc文件/平时文档/download/font_6hm4p5ql8s13jtt9/demo_fontclass.html-->
@@ -24,10 +24,15 @@
         var footer = document.getElementById("footer");
         var playId = document.getElementById("play_id");
         var fullId = document.getElementById("full_id");
+        var titleId = document.getElementById("title_id");
 
-        var screenW = document.documentElement.clientWidth;
-        var screenH =  document.documentElement.clientHeight;
-        alert("竖屏=0=="+screenH+"===="+screenW);//588--393  636-393  660 393
+        var screenW = 0;//这是变量
+        var screenH =  0;
+        var screenW0 = document.documentElement.clientWidth;//这是定量
+        var screenH0 =  document.documentElement.clientHeight;
+//        alert("竖屏=012=="+screenH0+"===="+screenW0);//588--393  636-393  660 393
+        screenW = screenW0;//这是变量
+         screenH =  screenH0;
         changeVideoW();
         otherCaulue();
 
@@ -46,21 +51,27 @@
             if ("全屏" == fullId.innerHTML){
                 fullId.innerHTML = "小屏";
                 changeVideoH();
+//                window.location.reload();
+//                alert("---ganhane--")
             }else if ("小屏" == fullId.innerHTML){
                 fullId.innerHTML = "全屏";
                 changeVideoS();
+//                alert("---ganhane--")
             }
 
+        }
+        titleId.onclick = function () {
+            window.location.reload();
         }
 
         window.addEventListener('orientationchange', function(event){
             //第一次不调用事件，之和调用事件
             if ( window.orientation == 180 || window.orientation==0 ) {
-                screenW = screenW;
-                 screenH = screenH;
+                screenW = screenW0;
+                 screenH = screenH0;
 //                screenW = 393;
 //                 screenH = 660;
-                alert("竖屏==="+screenH+"===="+screenW);//321--663  663-369
+                alert("竖屏==="+screenH0+"===="+screenW0);//321--663  663-369
                 //changeOriP(screenH,screenW)
                 fullId.hidden = false;
                 changeVideoH();
@@ -69,11 +80,11 @@
             }
             if( window.orientation == 90 || window.orientation == -90 ) {
 
-                screenW = screenH+2;//获取的值得调换--减去边框的间距
-                screenH =  screenW-2;//减去边框的间距
+                screenW = screenH0+2;//获取的值得调换--减去边框的间距
+                screenH =  screenW0-2;//减去边框的间距
 //                screenW = 662//获取的值得调换--减去边框的间距
 //                screenH =  391;//减去边框的间距
-                alert("横屏==="+screenH+"===="+screenW);//591-393  393-639
+                alert("横屏12==="+screenH0+"===="+screenW0);//591-393  393-639
                 fullId.innerHTML = "小屏";
                 fullId.hidden = true;
 //                changeOriL();
