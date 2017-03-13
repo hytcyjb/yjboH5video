@@ -36,7 +36,6 @@
         changeVideoW();
         otherCaulue();
 
-
         playId.onclick = function () {
             //头尾布局隐藏;
             if (header.hidden){
@@ -185,6 +184,58 @@
             test = test+5;
             if (test > total){               test = 0;            }
             progressImg.style.left = test +"px";
+        }
+
+
+        /*--------------------------------------加入点击事件-------------------------------------------*/
+        video1.controls = false;
+        video1.poster = "http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg";
+        changeProgress();
+
+        /*这是跳转视频播放进度*/
+        function changeProgress() {
+            outer.addEventListener('touchstart', touchSatrt, false);
+            outer.addEventListener('touchmove', touchMove, false);
+            outer.addEventListener('touchend', touchEnd, false);
+            var disX = 0;
+            var startX,//触摸时的坐标
+//                    startY,
+                x, //滑动的距离
+//                    y,
+//                    aboveY=0; //设一个全局变量记录上一次内部块滑动的位置
+                aboveX = 0; //设一个全局变量记录上一次内部块滑动的位置
+
+
+            function touchSatrt(e) {//触摸
+                e.preventDefault();
+                var touch = e.touches[0];
+                //startY = touch.pageY;   //刚触摸时的坐标
+                startX = touch.pageX;
+            }
+
+            function touchMove(e) {//滑动
+                e.preventDefault();
+                var touch = e.touches[0];
+                // y = touch.pageY - startY;//滑动的距离
+                x = touch.pageX - startX;
+                //  inner.style.top=aboveY+y+"px"; //这一句中的aboveY是inner上次滑动后的位置
+                var finalX = aboveX + x;//最终x轴的坐标
+                if (finalX < 0) {
+                    finalX == 0;
+                } else if (x > outer.offsetWidth - inner.offsetWidth) {
+                    finalX == outer.offsetWidth - inner.offsetWidth;
+                }
+                inner.style.left = finalX + "px";
+                /*  /!*设置时间*!/
+                 video1.currentTime = finalX * video1.duration /(outer.offsetWidth - inner.offsetWidth);*/
+                seektime(finalX, outer.offsetWidth - inner.offsetWidth);
+            }
+
+            function touchEnd(e) {//手指离开屏幕
+                e.preventDefault();
+                // aboveY=parseInt(inner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;
+                aboveX = parseInt(inner.style.left);
+            }//
         }
     }
 
