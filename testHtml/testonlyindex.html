@@ -25,6 +25,12 @@
         var playId = document.getElementById("play_id");
         var fullId = document.getElementById("full_id");
         var titleId = document.getElementById("title_id");
+        var imgPlay = document.getElementById("img_play");
+        var currentTimeId = document.getElementById("current_time_id");
+        var totalTimeId = document.getElementById("total_time_id");
+
+        var timer = null;//播放的一秒刷新一次
+        var timerdjs = null;//播放时倒计时几秒钟把页面去掉
 
         var screenW = 0;//这是变量
         var screenH =  0;
@@ -62,7 +68,7 @@
         titleId.onclick = function () {
             window.location.reload();
         }
-
+        /*屏幕切换*/
         window.addEventListener('orientationchange', function(event){
             //第一次不调用事件，之和调用事件
             if ( window.orientation == 180 || window.orientation==0 ) {
@@ -187,16 +193,89 @@
         }
 
 
-        /*--------------------------------------加入点击事件-------------------------------------------*/
-        video1.controls = false;
-        video1.poster = "http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg";
+        /*--------------------------------------加入点击事件------2017年3月13日23:25:17-------------------------------------*/
+        videoId.controls = false;
+        videoId.poster = "http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg";
         changeProgress();
 
+        /*视频元素加载完之后，进行获取视频的数据---设置总时间长度*/
+        videoId.addEventListener("canplay", function () {
+            /*  playId.className = 'playIcon';*/
+            /*这是 视频的时间进度*/
+            totalTimeId.innerHTML = toCustomTime(Math.floor(videoId.duration));
+//            progressTextId.hidden = true;
+            /* alert("====" + Math.floor(video1.duration));*/
+            nowtime();
+            /*这是音量键的进度条*/
+            /*这边音量弄错了，应该是手机系统的音量，而不是html的视频音量http://www.cnblogs.com/maxinliang/archive/2013/07/02/3167212.html*/
+//            voiceinner.style.top = (voiceouter.offsetHeight - voiceinner.offsetHeight) * (1 - video1.volume) + "px";
+
+            videoId.style.width = (videoBox.offsetWidth) + 'px';
+            videoId.style.height = (videoBox.offsetHeight) + 'px';
+            /*alert("==="+playId.offsetHeight+"===="+fgf_div.offsetHeight+"===="+playtime.offsetHeight+"=-==="+playtime.height)*/
+            /* alert("=----="+(video1.volume)+"====="+voiceinner.style.top+"===="+(voiceouter.offsetHeight - voiceinner.offsetHeight)*(video1.volume));*/
+        });
+        videoId.onended = function () {
+            var r = confirm("谢谢观看" + "<br />" + "视频播放结束了，是否重新播放？");
+            if (r == true) {
+                seektime(0, 1);
+            }
+        }
+        videoId.onwaiting = function () {//视频正在缓冲中
+            imgPlay.hidden = false;
+            alert("正在加载中...");
+        }
+        videoId.onplaying = function () {//视频缓冲结束，播放了
+            imgPlay.hidden = true;
+            alert("加载完成");
+        }
+        /*拖动进行变化*/
+        function seektime(seeknow, seektotal) {
+            videoId.currentTime = seeknow * video1.duration / seektotal;
+            if (!videoId.paused) {//先初始化暂停
+                videoId.pause();
+            }
+            changeSeekPlay();
+        }
+        /*播放按钮*/
+        imgPlay.onclick = function () {
+            changeSeekPlay();
+            imgPlay.hidden = true;
+        }
+        /*播放按钮，已经拖动时走这里*/
+        function changeSeekPlay() {
+            if (videoId.paused) {
+                videoId.play();
+//                    $("playId").removeClass("playIcon").addClass("pauseIcon");
+                /*playId.removeClass("playIcon").addClass("pauseIcon");*/
+                /* playId.innerHTML = "暂停";*/
+//                $(playId).removeClass("iconfont icon-bofang").addClass("iconfont icon-zanting");
+                /* playId.className = "pauseIcon";*/
+                /* class: iconfont icon-bofang;
+                 class: iconfont icon-zanting;*/
+                nowtime()
+                timer = setInterval(nowtime, 1000);
+            } else {
+                videoId.pause();
+                /* playId.innerHTML = "播放";*/
+//                $(playId).removeClass("iconfont icon-zanting").addClass("iconfont icon-bofang");
+                /* playId.className = "playIcon";*/
+//                    playId.removeClass("pauseIcon").addClass("playIcon");
+                clearInterval(timer);
+            }
+        }
+        /*播放到什么地方*/
+        function nowtime() {
+            currentTimeId.innerHTML = toCustomTime(Math.floor(videoId.currentTime));
+            progressImg.style.left = (videoId.currentTime * (progressLine.offsetWidth - progressImg.offsetWidth) / videoId.duration) + "px";
+        }
+//        imgPlay.url = "progress.gif";
+//        imgPlay.URL = "progress.gif";
         /*这是跳转视频播放进度*/
         function changeProgress() {
-            outer.addEventListener('touchstart', touchSatrt, false);
-            outer.addEventListener('touchmove', touchMove, false);
-            outer.addEventListener('touchend', touchEnd, false);
+            progressLine.addEventListener('touchstart', touchSatrt, false);
+            progressLine.addEventListener('touchmove', touchMove, false);
+            progressLine.addEventListener('touchend', touchEnd, false);
             var disX = 0;
             var startX,//触摸时的坐标
 //                    startY,
@@ -222,13 +301,13 @@
                 var finalX = aboveX + x;//最终x轴的坐标
                 if (finalX < 0) {
                     finalX == 0;
-                } else if (x > outer.offsetWidth - inner.offsetWidth) {
-                    finalX == outer.offsetWidth - inner.offsetWidth;
+                } else if (x > progressLine.offsetWidth - progressImg.offsetWidth) {
+                    finalX == progressLine.offsetWidth - progressImg.offsetWidth;
                 }
-                inner.style.left = finalX + "px";
+                progressImg.style.left = finalX + "px";
                 /*  /!*设置时间*!/
                  video1.currentTime = finalX * video1.duration /(outer.offsetWidth - inner.offsetWidth);*/
-                seektime(finalX, outer.offsetWidth - inner.offsetWidth);
+                seektime(finalX, progressLine.offsetWidth - progressImg.offsetWidth);
             }
 
             function touchEnd(e) {//手指离开屏幕
@@ -237,6 +316,35 @@
                 aboveX = parseInt(inner.style.left);
             }//
         }
+        /**
+         * 将时间转换为正常时间
+         * */
+        function toCustomTime(number) {
+            number = parseInt(number);
+            var finaltime = "00:00";
+            var hour = 0;
+            var minu = 0;
+            var second = 0;
+            hour = number / 60 / 60;
+            hour = toZero(Math.floor(hour));
+
+            minu = number % 3600 / 60;
+            minu = toZero(Math.floor(minu));
+
+            second = number % 60;
+            second = toZero(Math.floor(second));
+
+            finaltime = hour + ":" + minu + ":" + second;
+            return finaltime;
+        }
+        function toZero(hour) {
+            if (hour < 10) {
+                return "0" + hour;
+            } else {
+                return hour;
+            }
+        }
+
     }
 
 </script>
@@ -249,6 +357,7 @@
     #progress_line{ height: 5px;background: gray; margin:  7px 10px;position: absolute}/*width: 373px;*/
     #progress_img{ height: 15px;width: 15px;left: 0px;position: absolute;margin:  -5px -5px;}
     #play_id{ color: red; float: left;padding: 5px;}
+    #img_play{ position: absolute; left: 0;right: 0;top: 0;bottom: 0;margin: auto;}/*参考：http://blog.csdn.net/freshlover/article/details/11579669*/
 
     /*@media all and (orientation : landscape) {
         h2{color:red;}!*横屏时字体红色*!
@@ -268,6 +377,8 @@
         <div id="back_id" style="color: red;float: left;padding: 5px;">《返回</div>
         <div id="title_id" style="color: red;float: left;padding: 5px 0px 5px 10px; ">标题：XXX</div>
     </div>
+    <!--<div datasrc="../img/">视频播放图标</div>-->
+    <img src="../img/Play_Disabled_64px_560451_easyicon.net.png"  id="img_play">
     <div id="footer">
         <div id="progress_line">
             <img src="../img/round_16px.png" id="progress_img">
