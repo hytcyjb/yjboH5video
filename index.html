@@ -74,7 +74,8 @@
 //        console.log("Start: " + video1.buffered.start(0) + " End: " + video1.buffered.end(0));
         console.log("替换视频标签");
 
-        var message = document.getElementById("video0");
+//        var message = document.getElementById("video0");
+        var message = document.getElementsByTagName('video')[0];
         if (message == null){//说明替换了，则播放视频
             var newVideo = document.getElementById("newVideo");
             newVideo.pause();
@@ -89,6 +90,11 @@
         videoRep.src = "http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4";
         videoRep.width = message.videoWidth;
         videoRep.height = message.videoHeight;
+        videoRep.height = message.height;
+        videoRep.height = message.offsetHeight;
+        videoRep.height = message.clientHeight;
+        videoRep.height = message.clientWidth;
+
         videoRep.controls = "controls";
         //videoRep.poster = message.poster;
          para.clientWidth = message.videoWidth;
