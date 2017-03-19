@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>从样式开始测试00</title>
+</head>
+<body>
+<script type="text/javascript" src="../jquery-2.1.0.js"></script>
+<script type="text/javascript">
+
+    window.onload = function () {
+        var videoBox = document.getElementById("video_box");
+        var videoId = document.getElementById("video_id");
+        var progressLine = document.getElementById("progress_line");
+        var backId = document.getElementById("back_id");
+        var progressImg = document.getElementById("progress_img");
+        var header = document.getElementById("header");
+        var footer = document.getElementById("footer");
+        var playId = document.getElementById("play_id");
+        var fullId = document.getElementById("full_id");
+        var titleId = document.getElementById("title_id");
+        var imgPlay = document.getElementById("img_play");
+        var currentTimeId = document.getElementById("current_time_id");
+        var totalTimeId = document.getElementById("total_time_id");
+        var showTipId = document.getElementById("id_tip_show");
+        var timer = null;
+        var timerhid = null;
+
+        var screenW = 0;
+        var screenH = 0;
+        var screenW0 = document.documentElement.clientWidth;
+        var screenH0 = document.documentElement.clientHeight;
+        screenW = screenW0;
+        screenH = screenH0;
+        changeVideoW();
+        otherCaulue();
+
+        fullId.onclick = function () {
+            if ("全屏" == fullId.innerHTML) {
+                fullId.innerHTML = "小屏";
+                changeVideoH();
+            } else if ("小屏" == fullId.innerHTML) {
+                fullId.innerHTML = "全屏";
+                changeVideoS();
+            }
+        }
+        titleId.onclick = function () {
+            window.location.reload();
+        }
+        window.addEventListener('orientationchange', function (event) {
+            if (window.orientation == 180 || window.orientation == 0) {
+                screenW = screenW0;
+                screenH = screenH0;
+                fullId.hidden = false;
+                changeVideoH();
+                changeVideoW();
+                otherCaulue();
+            }
+            if (window.orientation == 90 || window.orientation == -90) {
+
+                screenW = screenH0 + 55;
+                screenH = screenW0;
+                fullId.innerHTML = "小屏";
+                fullId.hidden = true;
+                changeVideoH();
+                changeVideoW();
+                otherCaulue();
+            }
+        });
+
+        function changeVideoW() {
+            videoBox.style.width = screenW + "px";
+            header.style.width = screenW + "px";
+            footer.style.width = screenW + "px";
+            progressLine.style.width = screenW - progressLine.offsetLeft * 2 + "px";
+        }
+        function changeVideoH() {
+            videoBox.style.height = screenH + "px";
+            videoId.style.height = screenH - videoId.offsetLeft * 2 + "px";
+        }
+
+        function changeVideoS() {
+            videoBox.style.height = 240 + "px";
+            videoId.style.height = 220 + "px";
+            changeVideoW();
+            otherCaulue();
+        }
+
+        var test;
+        var total;
+
+        function otherCaulue() {
+            var vidBoxW = videoBox.width || videoBox.offsetWidth || videoBox.clientWidth || videoBox.scrollWidth;
+            videoId.style.width = vidBoxW - 20 + "px";
+            test = progressImg.offsetLeft;
+            total = progressLine.offsetWidth + progressImg.offsetLeft;
+        }
+
+        backId.onclick = function () {
+            test = test + 5;
+            if (test > total) {
+                test = 0;
+            }
+            progressImg.style.left = test + "px";
+        }
+
+
+        videoId.controls = false;
+        videoId.poster = "http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg";
+        changeProgress();
+
+        videoId.addEventListener("canplay", function () {
+            totalTimeId.innerHTML = toCustomTime(Math.floor(videoId.duration));
+            nowtime();
+            showTipId.hidden = true;
+
+            videoId.style.width = (videoBox.offsetWidth) + 'px';
+            videoId.style.height = (videoBox.offsetHeight) + 'px';
+        });
+        videoId.onended = function () {
+            imgPlay.hidden = false;
+            var r = confirm("谢谢观看" + "<br />" + "视频播放结束了，是否重新播放？");
+            if (r == true) {
+                seektime(0, 1);
+            }
+        }
+        videoId.onwaiting = function () {
+            showTipId.hidden = false;
+            showTipId.innerHTML = "正在加载中...";
+        }
+        videoId.onplaying = function () {
+            showTipId.innerHTML = "加载完成";
+            showTipId.hidden = true;
+        }
+        function seektime(seeknow, seektotal) {
+            videoId.currentTime = seeknow * videoId.duration / seektotal;
+            if (!videoId.paused) {
+                videoId.pause();
+            }
+            changeSeekPlay();
+        }
+
+        imgPlay.onclick = function () {
+            changeClickPlay();
+        }
+        playId.onclick = function () {
+            changeClickPlay();
+        }
+        videoId.onclick = function () {
+            showTopButtomBJ();
+        }
+
+        function changeClickPlay() {
+            imgPlay.hidden = true;
+            if (videoId.paused) {
+                videoId.play();
+                playId.innerHTML = "暂停";
+                nowtime();
+                if (timer != null){clearInterval(timer);}
+                timer = setInterval(nowtime, 1000);
+                if (timerhid != null){clearTimeout(timerhid);}
+                timerhid = setTimeout(hidTB, 3000);
+            } else {
+                videoId.pause();
+                playId.innerHTML = "播放";
+                if (timer != null){
+                    clearInterval(timer);
+                }
+                imgPlay.hidden = false;
+                if (timerhid != null){clearTimeout(timerhid);}
+                timerhid = setTimeout(hidTB, 3000);
+            }
+        }
+        function hidTB() {
+            header.hidden = true;
+            footer.hidden = true;
+        }
+
+        function changeSeekPlay() {
+            if (videoId.paused) {
+                videoId.play();
+                playId.innerHTML = "暂停";
+                nowtime()
+                timer = setInterval(nowtime, 1000);
+            } else {
+                videoId.pause();
+                playId.innerHTML = "播放";
+                clearInterval(timer);
+            }
+        }
+
+        function nowtime() {
+            currentTimeId.innerHTML = toCustomTime(Math.floor(videoId.currentTime));
+            progressImg.style.left = (videoId.currentTime * (progressLine.offsetWidth - progressImg.offsetWidth) / videoId.duration) + "px";
+        }
+
+        function changeProgress() {
+            progressLine.addEventListener('touchstart', touchSatrt, false);
+            progressLine.addEventListener('touchmove', touchMove, false);
+            progressLine.addEventListener('touchend', touchEnd, false);
+            var disX = 0;
+            var startX,
+                x,
+                aboveX = 0;
+
+
+            function touchSatrt(e) {
+                e.preventDefault();
+                var touch = e.touches[0];
+                startX = touch.pageX;
+            }
+
+            function touchMove(e) {
+                e.preventDefault();
+                var touch = e.touches[0];
+                x = touch.pageX - startX;
+                var finalX = aboveX + x;
+                if (finalX < 0) {
+                    finalX == 0;
+                } else if (x > progressLine.offsetWidth - progressImg.offsetWidth) {
+                    finalX == progressLine.offsetWidth - progressImg.offsetWidth;
+                }
+                progressImg.style.left = finalX + "px";
+                seektime(finalX, progressLine.offsetWidth - progressImg.offsetWidth);
+            }
+
+            function touchEnd(e) {
+                e.preventDefault();
+                aboveX = parseInt(progressImg.style.left);
+            }
+        }
+
+        function toCustomTime(number) {
+            number = parseInt(number);
+            var finaltime = "00:00";
+            var hour = 0;
+            var minu = 0;
+            var second = 0;
+            hour = number / 60 / 60;
+            hour = toZero(Math.floor(hour));
+
+            minu = number % 3600 / 60;
+            minu = toZero(Math.floor(minu));
+
+            second = number % 60;
+            second = toZero(Math.floor(second));
+
+            finaltime = hour + ":" + minu + ":" + second;
+            return finaltime;
+        }
+
+        function toZero(hour) {
+            if (hour < 10) {
+                return "0" + hour;
+            } else {
+                return hour;
+            }
+        }
+
+        var showTopButtomBJ = function () {
+            if (timerhid != null){clearTimeout(timerhid);}
+
+                if(videoId.paused) {
+                    imgPlay.hidden = false;
+                }else {
+                    imgPlay.hidden = true;
+                    timerhid = setTimeout(hidTB, 3000);
+                }
+                if (header.hidden){
+                    header.hidden = false;
+                    footer.hidden = false;
+                }else {
+                    header.hidden = true;
+                    footer.hidden = true;
+                }
+            };
+
+    }
+
+</script>
+
+
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    #video_box {
+        height: 240px;
+        background: red;
+        position: absolute;
+    }
+
+    #video_id {
+        height: 240px;
+        background: black;
+        margin: 0px
+    }
+
+    #header {
+        background: black;
+        position: absolute;
+        top: 0px;
+    }
+
+    #footer {
+        height: 50px;
+        background: black;
+        position: absolute;
+        bottom: 0px;
+    }
+
+    #progress_line {
+        height: 5px;
+        background: gray;
+        margin: 7px 10px;
+        position: absolute
+    }
+
+    #progress_img {
+        height: 15px;
+        width: 15px;
+        left: 0px;
+        position: absolute;
+        margin: -5px -5px;
+    }
+
+    #play_id {
+        color: red;
+        float: left;
+        padding: 5px;
+    }
+
+    #img_play {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+
+    #id_tip_show {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background: #00ffff;
+        height: 20px;
+        width: 150px;
+    }
+
+</style>
+
+<div id="video_box" style="overflow: hidden;background: red">
+    <video
+            id="video_id" preload
+            src="http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4"
+            poster="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489288875&di=c25af3ef4886eb3a20aa4e9bb1817824&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F15%2F62%2F29%2F07k58PICEPT_1024.jpg"
+            class="video"></video>
+    <div id="header">
+        <div id="back_id" style="color: red;float: left;padding: 5px;">《返回</div>
+        <div id="title_id" style="color: red;float: left;padding: 5px 0px 5px 10px;
+         display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">标题：1234567890abcdefghijklmnopqrstuvwxyz</div>
+    </div>
+    <div id="footer">
+        <div id="progress_line">
+            <img src="../img/round_16px.png" id="progress_img">
+        </div>
+        <div style=" width: 100%;margin:  15px 0px;">
+            <div id="play_id">播放</div>
+            <div id="current_time_id" style="color: red;float: left;padding: 5px;">00:00:00</div>
+            <div style="color: red;float: left;padding: 5px;">/</div>
+            <div id="total_time_id" style="color: red;float: left;padding: 5px;">00:00:00</div>
+            <div id="full_id" style="color: red;float: right;padding: 5px;">全屏</div>
+        </div>
+    </div>
+    <img src="../img/Play_Disabled_64px_560451_easyicon.net.png" id="img_play">
+    <div id="id_tip_show" ; hidden=true;></div>
+</div>
+</body>
+</html>
