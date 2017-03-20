@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单控件——表单控件大小</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+</head>
+<body>
+<form role="form">
+    <h3>案例1</h3>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="你好">
+            记住密码
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="love" checked>
+            喜欢
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="hate">
+            不喜欢
+        </label>
+    </div>
+</form>
+<script type="text/javascript">
+    window.onload = function () {
+        var optionsRadios1 = document.getElementById("optionsRadios1");
+        optionsRadios1.click = function () {
+            alert("===="+optionsRadios1.value);
+        }
+    }
+</script>
+</body>
+</html>

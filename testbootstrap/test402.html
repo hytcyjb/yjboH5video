@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>网格布局的基本用法</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style403.css">
+</head>
+
+<body>
+<script type="text/css">
+    [class *= col-]{
+        background-color: #eee;
+        border: 1px solid #ccc;
+    }
+</script>
+<div>每个上面加入颜色是为了看效果;如果列数之和超过12的话则换行显示；反正列数一共分成12份</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 btn-success">.col-md-4</div>
+        <div class="col-md-9 btn-warning">.col-md-8</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">.col-md-4</div>
+        <div class="col-md-4">.col-md-4</div>
+        <div class="col-md-4">.col-md-4</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">.col-md-3</div>
+        <div class="col-md-9">.col-md-6</div>
+        <div class="col-md-3">.col-md-3</div>
+    </div>
+</div>
+</body>
+</html>
