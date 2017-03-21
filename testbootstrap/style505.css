@@ -1,9 +1,22 @@
+/** {
+    margin: 0;
+    padding: 0;
+}*/
 body {
-    padding: 50px 100px;
+    padding: 200px 100px;
 }
 .dropdown{
     float: left;
 }
 h4{
     font-weight:bold;
+}
+[class *= col-]{
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+[class *= col-] [class *= col-] {
+    background-color: #f36;
+    border:1px dashed #fff;
+    color: #fff;
 }

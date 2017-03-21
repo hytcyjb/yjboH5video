@@ -1,0 +1,820 @@
+<html lang="en" data-ng-app="app" class="ng-scope">
+<head>
+    <!--<style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>-->
+    <meta charset="utf-8">
+    <title>班组汇</title>
+    <link href="img/logo/logoLeft.png" rel="shortcut icon" type="image/x-icon">
+    <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--<link rel="stylesheet" href="css/bootstrap.css" type="text/css">-->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/font.css" type="text/css">
+    <link rel="stylesheet" href="css/app.css" type="text/css">
+    <link rel="stylesheet" href="css/iframe.css" type="text/css">
+    <link rel="stylesheet" href="css/bzh2.css">
+    <link rel="stylesheet" href="css/ng-sortable.css">
+    <link rel="stylesheet" href="css/ng-sortable.style.min.css">
+    <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script><script src="http://gosspublic.alicdn.com/aliyun-oss-sdk.min.js"></script></head>
+<body ng-controller="AppCtrl" style="" class="ng-scope">
+<!-- uiView:  --><div class="app ng-scope app-header-fixed app-aside-fixed" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed,
+   'app-aside-fixed':app.settings.asideFixed,
+    'app-aside-folded':app.settings.asideFolded,
+     'app-aside-dock':app.settings.asideDock,
+      'container':app.settings.container}" ui-view="">  <!-- navbar -->
+    <!-- ngInclude: 'tpl/blocks/header.html' --><div data-ng-include=" 'tpl/blocks/header.html' " class="app-header navbar ng-scope">
+        <!-- navbar header -->
+        <div class="navbar-header bg-black ng-scope">
+            <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+                <i class="glyphicon glyphicon-cog"></i>
+            </button>
+            <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
+                <i class="glyphicon glyphicon-align-justify"></i>
+            </button>
+            <!-- brand -->
+            <a href="#/" class="navbar-brand text-lt">
+                <!--<i class="fa fa-btc"></i>-->
+                <img src="http://image.89mc.com/89mc/knowledge/img/9ecce9ef-9a52-43e6-a389-3b97b98222c7.png" alt="">
+
+
+                <span class="hidden-folded m-l-xs">班组汇</span>
+            </a>
+            <!-- / brand -->
+        </div>
+        <!-- / navbar header -->
+
+        <!-- navbar collapse -->
+        <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
+            <!-- buttons -->
+            <div class="nav navbar-nav hidden-xs">
+                <a href="" class="btn no-shadow navbar-btn" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+                    <i class="fa fa-fw fa-dedent"></i>
+                </a>
+            </div>
+            <!-- / buttons -->
+            <!-- search form -->
+            <!--<form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">-->
+            <!--<div class="form-group">-->
+            <!--<div class="input-group">-->
+            <!--<input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="搜索内容">-->
+            <!--<span class="input-group-btn">-->
+            <!--<button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</form>-->
+            <!-- / search form -->
+
+            <!-- nabar right -->
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="hidden-xs">
+                    <a ui-fullscreen="" class=""><i class="fa fa-expand fa-fw text"></i><i class="fa fa-compress fa-fw text-active"></i></a>
+                </li>
+
+                <li class="hiddem-xs">
+                    <a>
+                        <span class="hidden-sm hidden-md ng-binding" ng-bind="companyName">八九点测试_zxd</span>
+                        <span class="hidden-sm hidden-md ng-binding">(企业管理员)</span>
+                    </a>
+                </li>
+                <li class="dropdown" dropdown="">
+                    <a href="" class="dropdown-toggle clear" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+              <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                <img src="/BagServer/img/contact/maillist/p2.png" alt="..." style="height:40px;width:auto">
+                <i class="on md b-white bottom"></i>
+              </span>
+
+                        <span class="hidden-sm hidden-md ng-binding" ng-bind="userName">杨建波测试</span> <b class="caret"></b>
+                    </a>
+                    <!-- dropdown -->
+                    <ul class="dropdown-menu animated fadeInRight w">
+                        <li ng-controller="ModalDemoCtrl" class="ng-scope">
+                            <script type="text/ng-template" id="myModalContent.html">
+                                <div  ng-include="'tpl/modal.html'" ></div>
+                            </script>
+
+                            <a ng-click="open()">修改密码</a>
+                        </li>
+                        <li ng-controller="logoffMoudle" class="ng-scope">
+                            <a ng-click="logoff()">注销</a>
+                        </li>
+                    </ul>
+                    <!-- / dropdown -->
+                </li>
+            </ul>
+            <!-- / navbar right -->
+
+        </div>
+        <!-- / navbar collapse -->
+
+
+    </div>
+    <!-- / navbar -->
+
+    <!-- menu -->
+    <!-- ngInclude: 'tpl/blocks/aside.html' --><div data-ng-include=" 'tpl/blocks/aside.html' " class="app-aside hidden-xs bg-black">
+        <div class="aside-wrap ng-scope">
+            <!-- if you want to use a custom scroll when aside fixed, use the slimScroll
+              <div class="navi-wrap" ui-jq="slimScroll" ui-options="{height:'100%', size:'8px'}">
+            -->
+            <div class="navi-wrap">
+                <!-- nav -->
+                <!-- ngInclude: 'tpl/blocks/nav.html' --><nav ui-nav="" class="navi ng-scope" ng-include="'tpl/blocks/nav.html'"><!-- list -->
+                <ul class="nav ng-scope">
+                    <!--  <li >
+                       <a ui-sref="app.Contacts" >
+                         <i class="fa  fa-phone-square icon text-info-dker"></i>
+                         <span class="font-bold" >通讯录</span>
+                       </a>
+                     </li>
+                     <li ui-sref-active="active">
+                       <a ui-sref="app.announcement" class="auto">
+                         <i class="fa fa-envelope icon text-primary-dk"></i>
+                         <span class="font-bold" >公告推送</span>
+                       </a>
+                     </li>
+                     <li ui-sref-active="active">
+                       <a ui-sref="app.appMan" class="auto">
+                         <i class="fa fa-gamepad icon text-warning-lt"></i>
+                         <span class="font-bold" >应用管理</span>
+                       </a>
+                     </li> -->
+                    <!--<li ui-sref-active="active">-->
+                    <!--<a ui-sref="app.orgDetailForm" class="auto">-->
+                    <!--<i class="fa fa-user icon text-info-dker"></i>-->
+                    <!--<span class="font-bold" >部门详情</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li ng-repeat="item1 in menuLists" class="y_repeatLi" on-finish-render-filters ui-sref="{{item1.menuUrl}}">-->
+                    <!-- ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="glyphicon  glyphicon-home icon text-primary-dk"></i>
+                        <span class="font-bold ng-binding">首页</span>
+                    </a>
+                    <ul class="nav nav-sub dk">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">首页</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="common/home.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">首页</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul>
+                </li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="glyphicon glyphicon-th-large icon text-primary-dk"></i>
+                        <span class="font-bold ng-binding">统计报告</span>
+                    </a>
+                    <ul class="nav nav-sub dk">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">统计报告</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="statisticsManager/report/company_report.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">统计报告</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul>
+                </li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="fa fa-book icon text-info-lt"></i>
+                        <span class="font-bold ng-binding">知库管理</span>
+                    </a>
+                    <ul class="nav nav-sub dk">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">知库管理</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="knowledgeManager/knowledgeMap/mapList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">知识地图</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="knowledgeManager/knowledgeManage/manageMap.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">知识管理</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="knowledgeManager/audit/auditList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">知识审核</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="knowledgeManager/comment/commentList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">知识评论</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul>
+                </li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="fa fa-users icon text-primary-dk"></i>
+                        <span class="font-bold ng-binding">学习分析</span>
+                    </a>
+
+                    <ul class="nav nav-sub dk" style="top: auto; bottom: auto;">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">学习分析</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="studyAnalysis/studyFiles/filesList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">学习档案</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="studyAnalysis/integralRank/integralRankList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">积分排名</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="studyAnalysis/interest/interestList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">学习趋向</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="studyAnalysis/hotVideo/hotVideoList.bs?classification=2" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">热门微课</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="studyAnalysis/hotClass/hotClassList.bs?classification=3" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">热门微例</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="studyAnalysis/hotQuestions/hotQuestionsList.bs?classification=4" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">热门百问</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="studyAnalysis/hotCases/hotCasesList.bs?classification=5" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">热门百科</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul></li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="fa  fa-phone-square icon text-info-dker"></i>
+                        <span class="font-bold ng-binding">通讯录</span>
+                    </a>
+
+                    <ul class="nav nav-sub dk" style="top: auto; bottom: auto;">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">通讯录</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="app.Contacts" ui-sref="app.Contacts" href="#/app/Contacts">
+                            <span class="ng-binding">通讯录</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul></li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="fa fa-gamepad icon text-warning-lt"></i>
+                        <span class="font-bold ng-binding">应用管理</span>
+                    </a>
+
+                    <ul class="nav nav-sub dk" style="top: auto; bottom: auto;">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">应用管理</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="app.appMan" ui-sref="app.appMan" href="#/app/appMan">
+                            <span class="ng-binding">应用管理</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul></li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="fa fa-database icon text-success-lter"></i>
+                        <span class="font-bold ng-binding">积分管理</span>
+                    </a>
+
+                    <ul class="nav nav-sub dk" style="top: auto; bottom: auto;">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">积分管理</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="integralManager/history/historyList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">积分历史</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="integralManager/integral_company/companyRule.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">企业积分</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul></li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="fa fa-envelope icon text-primary-dk"></i>
+                        <span class="font-bold ng-binding">公告推送</span>
+                    </a>
+
+                    <ul class="nav nav-sub dk" style="top: auto; bottom: auto;">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">公告推送</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="app.announcement" ui-sref="app.announcement" href="#/app/announcement">
+                            <span class="ng-binding">公告推送</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul></li><!-- end ngRepeat: item1 in menuLists --><li ng-repeat="item1 in menuLists" class="y_repeatLi ng-scope" on-finish-render-filters="" ui-sref="">
+                    <a href="" class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+                        <i class="fa fa-gears icon text-info-lt"></i>
+                        <span class="font-bold ng-binding">系统管理</span>
+                    </a>
+
+                    <ul class="nav nav-sub dk" style="top: auto; bottom: auto;">
+                        <li class="nav-sub-header">
+                            <a href="">
+                                <span class="ng-binding">系统管理</span>
+                            </a>
+                        </li>
+                        <!-- ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="systemManager/framework/main.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">组织架构</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="systemManager/organization/main.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">组织管理</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="systemManager/position/positionList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">职务管理</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList --><li ng-repeat="item2 in item1.childMenuList" class="changePage ng-scope">
+                        <!--<a someLink="{{item2.menuUrl}}" ui-sref="app.old_page">-->
+                        <a somelink="systemManager/online/onlineList.bs" ui-sref="app.old_page" href="#/app/old_page">
+                            <span class="ng-binding">在线用户</span>
+                        </a>
+                    </li><!-- end ngRepeat: item2 in item1.childMenuList -->
+
+                    </ul></li><!-- end ngRepeat: item1 in menuLists -->
+
+
+                    <!--<li ui-sref-active="active">-->
+                    <!--<a ui-sref="#">-->
+                    <!--<i class="glyphicon glyphicon-home icon text-primary-dker"></i>-->
+                    <!--<span class="font-bold" >工作台</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li ng-repeat="item1 in menuLists">-->
+                    <!--<a href class="auto">-->
+                    <!--<span class="pull-right text-muted">-->
+                    <!--<i class="fa fa-fw fa-angle-right text"></i>-->
+                    <!--<i class="fa fa-fw fa-angle-down text-active"></i>-->
+                    <!--</span>-->
+                    <!--<i class="fa fa-group icon text-info-lt"></i>-->
+                    <!--<span class="font-bold" >{{item1.menuName}}</span>-->
+                    <!--</a>-->
+                    <!--<ul class="nav nav-sub dk">-->
+                    <!--<li class="nav-sub-header">-->
+                    <!--<a href>-->
+                    <!--<span></span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li   ng-repeat="item2 in item1.childMenuList" ui-sref-active="">-->
+                    <!--<a ui-sref="app.dashboard-v1">-->
+                    <!--<span>{{item2.menuName}}</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+
+                </ul>
+                <!-- / list --></nav>
+                <!-- nav -->
+            </div>
+        </div>
+        <script class="ng-scope"></script>
+    </div>
+    <!-- / menu -->
+    <!--content -->
+    <div class="app-content ng-scope">
+        <!--<div ui-butterbar></div>-->
+        <!--<a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside" ></a>-->
+        <div ui-butterbar="" class="butterbar hide" id="ui_bar"><span class="bar"></span></div>
+        <!-- uiView:  --><div class="app-content-body fade-in-up ng-scope" ui-view=""><div class="hbox hbox-auto-xs hbox-auto-sm ng-scope" ng-init="app.settings.asideFolded = false;app.settings.asideDock = false; ">
+        <div class="col">
+            <iframe src="/BagServer/studyAnalysis/studyFiles/filesList.bs" id="external-frame" scrolling="yes" onloadstart="ui_bar_start()" onchange="ui_bar_start()" onload="setIframeHeight(this)" frameborder="0" height="1022">
+
+            </iframe>
+        </div>
+    </div></div>
+    </div>
+    <!--/content -->
+
+
+    <!--shezhi-->
+    <!-- ngInclude: 'tpl/blocks/settings.html' --><div data-ng-include=" 'tpl/blocks/settings.html' " class="settings panel panel-default ng-scope"><!-- settings -->
+        <button class="btn btn-default no-shadow pos-abt ng-scope" ui-toggle-class="active" target=".settings">
+            <i class="fa fa-spin fa-gear"></i>
+        </button>
+        <div class="panel-heading ng-scope">
+            Settings
+        </div>
+        <div class="panel-body ng-scope">
+            <div class="m-b-sm">
+                <label class="i-switch bg-info pull-right">
+                    <input type="checkbox" ng-model="app.settings.headerFixed" class="ng-pristine ng-untouched ng-valid">
+                    <i></i>
+                </label>
+                Fixed header
+            </div>
+            <div class="m-b-sm">
+                <label class="i-switch bg-info pull-right">
+                    <input type="checkbox" ng-model="app.settings.asideFixed" class="ng-pristine ng-untouched ng-valid">
+                    <i></i>
+                </label>
+                Fixed aside
+            </div>
+            <div class="m-b-sm">
+                <label class="i-switch bg-info pull-right">
+                    <input type="checkbox" ng-model="app.settings.asideFolded" class="ng-pristine ng-untouched ng-valid">
+                    <i></i>
+                </label>
+                Folded aside
+            </div>
+            <div class="m-b-sm">
+                <label class="i-switch bg-info pull-right">
+                    <input type="checkbox" ng-model="app.settings.asideDock" class="ng-pristine ng-untouched ng-valid">
+                    <i></i>
+                </label>
+                Dock aside
+            </div>
+            <div>
+                <label class="i-switch bg-info pull-right">
+                    <input type="checkbox" ng-model="app.settings.container" class="ng-pristine ng-untouched ng-valid">
+                    <i></i>
+                </label>
+                Boxed layout
+            </div>
+        </div>
+        <div class="wrapper b-t b-light bg-light lter r-b ng-scope">
+            <div class="row row-sm">
+                <div class="col-xs-6">
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-black';
+          app.settings.navbarCollapseColor='bg-white-only';
+          app.settings.asideColor='bg-black';
+         ">
+                        <input type="radio" name="a" ng-model="app.settings.themeID" value="1" class="ng-pristine ng-untouched ng-valid">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-black header"></b>
+            <b class="bg-white header"></b>
+            <b class="bg-black"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-dark';
+          app.settings.navbarCollapseColor='bg-white-only';
+          app.settings.asideColor='bg-dark';
+         ">
+                        <input type="radio" name="a" ng-model="app.settings.themeID" value="13" class="ng-pristine ng-untouched ng-valid">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-dark header"></b>
+            <b class="bg-white header"></b>
+            <b class="bg-dark"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-white-only';
+          app.settings.navbarCollapseColor='bg-white-only';
+          app.settings.asideColor='bg-black';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="2" class="ng-pristine ng-untouched ng-valid" name="12">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-white header"></b>
+            <b class="bg-white header"></b>
+            <b class="bg-black"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-primary';
+          app.settings.navbarCollapseColor='bg-white-only';
+          app.settings.asideColor='bg-dark';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="3" class="ng-pristine ng-untouched ng-valid" name="13">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-primary header"></b>
+            <b class="bg-white header"></b>
+            <b class="bg-dark"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-info';
+          app.settings.navbarCollapseColor='bg-white-only';
+          app.settings.asideColor='bg-black';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="4" class="ng-pristine ng-untouched ng-valid" name="14">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-info header"></b>
+            <b class="bg-white header"></b>
+            <b class="bg-black"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-success';
+          app.settings.navbarCollapseColor='bg-white-only';
+          app.settings.asideColor='bg-dark';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="5" class="ng-pristine ng-untouched ng-valid" name="15">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-success header"></b>
+            <b class="bg-white header"></b>
+            <b class="bg-dark"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block" ng-click="
+          app.settings.navbarHeaderColor='bg-danger';
+          app.settings.navbarCollapseColor='bg-white-only';
+          app.settings.asideColor='bg-dark';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="6" class="ng-pristine ng-untouched ng-valid" name="16">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-danger header"></b>
+            <b class="bg-white header"></b>
+            <b class="bg-dark"></b>
+          </span>
+                    </label>
+                </div>
+                <div class="col-xs-6">
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-black';
+          app.settings.navbarCollapseColor='bg-black';
+          app.settings.asideColor='bg-white b-r';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="7" class="ng-pristine ng-untouched ng-valid" name="17">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-black header"></b>
+            <b class="bg-black header"></b>
+            <b class="bg-white"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-dark';
+          app.settings.navbarCollapseColor='bg-dark';
+          app.settings.asideColor='bg-light';
+         ">
+                        <input type="radio" name="a" ng-model="app.settings.themeID" value="14" class="ng-pristine ng-untouched ng-valid">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-dark header"></b>
+            <b class="bg-dark header"></b>
+            <b class="bg-light"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-info dker';
+          app.settings.navbarCollapseColor='bg-info dker';
+          app.settings.asideColor='bg-light dker b-r';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="8" class="ng-pristine ng-untouched ng-valid" name="18">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-info dker header"></b>
+            <b class="bg-info dker header"></b>
+            <b class="bg-light dker"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-primary';
+          app.settings.navbarCollapseColor='bg-primary';
+          app.settings.asideColor='bg-dark';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="9" class="ng-pristine ng-untouched ng-valid" name="19">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-primary header"></b>
+            <b class="bg-primary header"></b>
+            <b class="bg-dark"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-info dker';
+          app.settings.navbarCollapseColor='bg-info dk';
+          app.settings.asideColor='bg-black';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="10" class="ng-pristine ng-untouched ng-valid" name="20">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-info dker header"></b>
+            <b class="bg-info dk header"></b>
+            <b class="bg-black"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block m-b" ng-click="
+          app.settings.navbarHeaderColor='bg-success';
+          app.settings.navbarCollapseColor='bg-success';
+          app.settings.asideColor='bg-dark';
+          ">
+                        <input type="radio" ng-model="app.settings.themeID" value="11" class="ng-pristine ng-untouched ng-valid" name="21">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-success header"></b>
+            <b class="bg-success header"></b>
+            <b class="bg-dark"></b>
+          </span>
+                    </label>
+
+                    <label class="i-checks block" ng-click="
+          app.settings.navbarHeaderColor='bg-danger dker bg-gd';
+          app.settings.navbarCollapseColor='bg-danger dker bg-gd';
+          app.settings.asideColor='bg-dark';
+         ">
+                        <input type="radio" ng-model="app.settings.themeID" value="12" class="ng-pristine ng-untouched ng-valid" name="22">
+                        <span class="block bg-light clearfix pos-rlt">
+            <span class="active pos-abt w-full h-full bg-black-opacity text-center">
+              <i class="glyphicon glyphicon-ok text-white m-t-xs"></i>
+            </span>
+            <b class="bg-danger dker header"></b>
+            <b class="bg-danger dker header"></b>
+            <b class="bg-dark"></b>
+          </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- /settings --></div></div>
+
+
+<!-- jQuery -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<!--iframe-->
+<script src="js/iframe.js"></script>
+
+<!-- Angular -->
+<script src="vendor/angular/angular.js"></script>
+
+<script src="vendor/angular/angular-animate/angular-animate.js"></script>
+<script src="vendor/angular/angular-cookies/angular-cookies.js"></script>
+<script src="vendor/angular/angular-resource/angular-resource.js"></script>
+<script src="vendor/angular/angular-sanitize/angular-sanitize.js"></script>
+<script src="vendor/angular/angular-touch/angular-touch.js"></script>
+<!-- Vendor -->
+<script src="vendor/angular/angular-ui-router/angular-ui-router.js"></script>
+<script src="vendor/angular/ngstorage/ngStorage.js"></script>
+
+<!-- bootstrap -->
+<script src="vendor/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<!--<script src="js/controllers/bootstrap.js"></script>-->
+<!-- lazyload -->
+<script src="vendor/angular/oclazyload/ocLazyLoad.js"></script>
+<!-- translate -->
+<script src="vendor/angular/angular-translate/angular-translate.js"></script>
+<script src="vendor/angular/angular-translate/loader-static-files.js"></script>
+<script src="vendor/angular/angular-translate/storage-cookie.js"></script>
+<script src="vendor/angular/angular-translate/storage-local.js"></script>
+<script src="vendor/angular/angular-location/angular-locale_zh-cn.js"></script>
+<script src="vendor/jquery/footable/footable.all.min.js"></script>
+
+<!-- App -->
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/config.lazyload.js"></script>
+<script src="js/config.router.js"></script>
+<script src="js/main.js"></script>
+<script src="js/services/ui-load.js"></script>
+<script src="js/filters/fromNow.js"></script>
+<script src="js/directives/setnganimate.js"></script>
+<script src="js/directives/ui-butterbar.js"></script>
+<script src="js/directives/ui-focus.js"></script>
+<script src="js/directives/ui-fullscreen.js"></script>
+<script src="js/directives/ui-jq.js"></script>
+<script src="js/directives/ui-module.js"></script>
+<script src="js/directives/ui-nav.js"></script>
+<script src="js/directives/ui-scroll.js"></script>
+<script src="js/directives/ui-shift.js"></script>
+<script src="js/directives/ui-toggleclass.js"></script>
+<script src="js/directives/ui-validate.js"></script>
+<script src="js/directives/addicon.js"></script>
+<script src="js/controllers/bootstrap.js"></script>
+<script src="js/services/commonService.js"></script>
+<script src="js/services/orgService.js"></script>
+<script src="js/controllers/annoucement/annService.js"></script>
+<script src="js/controllers/appManagement/ng-sortable.js"></script>
+
+<!-- Lazy loading -->
+<!--md5-->
+<script src="l10n/md5.js"></script>
+<script src="../../js/init.js"></script>
+
+
+<script src="vendor/libs/screenfull.min.js"></script></body></html>
