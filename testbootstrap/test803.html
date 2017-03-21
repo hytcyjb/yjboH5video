@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>按钮点击出弹窗-可保存操作-：导入JavaScript插件</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+<div>
+    备注：1.data-dismiss="modal"是控制右上方“x”的删除弹框的事件的；
+    <br />2.class="close"是控制“x”的样式的，
+    <br />3.aria-hidden="true"什么作用我也不知道；
+    <br />4.&times;是“x”的图标;
+    <br />5.span class="sr-only">Close /span不知道有啥用
+</div>
+<button class="btn btn-primary" type="button">点击我</button>
+<div class="modal" id="mymodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">模态弹出窗标题</h4>
+                <a class="modal-title " class="close" data-dismiss="modal">模态弹出窗标题&times;<span aria-hidden="true">&times;</span></a>
+                <li class="modal-title " class="close" data-dismiss="modal">模态弹出窗标题&times;<span aria-hidden="true">&times;</span></li>
+                <button class="modal-title pull-left" class="close" data-dismiss="modal">模态弹出窗标题&times;<span aria-hidden="true">&times;</span></button>
+                <button  class="close pull-left" data-dismiss="modal" type="button">模态弹出窗标题&times;<span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>模态弹出窗主体内容</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-transition.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-modal.js"></script>
+<script>
+    $(function(){
+        $(".btn").click(function(){
+            $("#mymodal").modal("toggle");
+        });
+    });
+</script>
+</body>
+</html>

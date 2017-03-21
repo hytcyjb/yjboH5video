@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript触发时的参数设置（一）---模态弹出框--JavaScript触发时的参数设置（一）</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+<br />同test802.html文件
+<br />可以查看截图544f0bd50001b34409020384.jpg文件；
+<br />1.backdrop or 可以通过设置data-backdrop="static"进行决定是否可以在弹框外是否可以取消弹框；static时不可取消，其他值（如果是空则有异常）都可以取消
+<br />2.show or data-show相当于点击按钮要点击2次，一次是初始化控件，第二次才是显示弹框；初始化完成之后不存在点击2次的事件了data-show="true"初始化不显示，默认情况（不写该属性）、或者false时都是初始化显示
+<br />3.keyboard  or data-keyboard="false"无法通过电脑的esc按钮退出弹出框，默认是true，true时可以退出弹出框
+<br />4.remote or "a"标签时，如果herf写了完整的http链接时，则直接跳转到网页上，不会弹出弹框，第二个按钮有此效果；同时可以取消其上行注释进行查看a标签先引出的弹框；
+<br />
+
+<button class="btn btn-primary" type="button">点击我</button>
+<div class="modal" id="mymodal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">模态弹出窗标题</h4>
+            </div>
+            <div class="modal-body">
+                <p>模态弹出窗主体内容</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- href触发模态弹出窗元素 -->
+<!-- 触发模态弹出窗的元素 -->
+<h4 data-toggle="modal" href="#mymodal2" class=" btn btn-primary" >点击我会弹出模态弹出窗</h4>
+<!-- 模态弹出窗 -->
+<div class="modal fade"  id="mymodal2" >
+    <!--<a class="btn btn-primary" data-toggle="modal" herf="#mymodal" >通过链接href属性触发</a>-->
+    <!--&lt;!&ndash; 模态弹出窗内容 &ndash;&gt;-->
+    <!--<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="mymodal">-->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">模态弹出窗标题</h4>
+            </div>
+            <div class="modal-body">
+                <p>模态弹出窗主体内容</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+    $(function(){
+        $(".btn").click(function(){
+            $("#mymodal").modal("toggle");
+        });
+    });
+// keyboard:false可以达到按“esc”键不能关闭弹出框事件；
+//    $(function(){
+//        $(".btn").click(function(){
+//            $("#mymodal").modal({
+//                keyboard:false
+//            });
+//        });
+//    });
+</script>
+</body>
+</html>
