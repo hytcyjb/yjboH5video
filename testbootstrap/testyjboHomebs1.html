@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模仿公司首页做的效果图bag.89mc.com</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+<div data-ng-include=" 'tpl/blocks/header.html' " class="app-header navbar ng-scope">
+    <!-- navbar header -->
+    <div class="navbar-header bg-black ng-scope">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+            <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
+            <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="#/" class="navbar-brand text-lt">
+            <!--<i class="fa fa-btc"></i>-->
+            <img src="http://image.89mc.com/89mc/knowledge/img/9ecce9ef-9a52-43e6-a389-3b97b98222c7.png" alt="">
+
+
+            <span class="hidden-folded m-l-xs">班组汇</span>
+        </a>
+        <!-- / brand -->
+    </div>
+    <!-- / navbar header -->
+
+    <!-- navbar collapse -->
+    <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
+        <!-- buttons -->
+        <div class="nav navbar-nav hidden-xs">
+            <a href="" class="btn no-shadow navbar-btn" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+                <i class="fa fa-dedent fa-fw"></i>
+            </a>
+        </div>
+
+        <!-- nabar right -->
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="hidden-xs">
+                <a ui-fullscreen="" class=""><i class="fa fa-expand fa-fw text"></i><i class="fa fa-compress fa-fw text-active"></i></a>
+            </li>
+
+            <li class="hiddem-xs">
+                <a>
+                    <span class="hidden-sm hidden-md ng-binding" ng-bind="companyName">八九点测试_zxd</span>
+                    <span class="hidden-sm hidden-md ng-binding">(企业管理员)</span>
+                </a>
+            </li>
+            <li class="dropdown" dropdown="">
+                <a href="" class="dropdown-toggle clear" dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+              <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                <img src="http://bag.89mc.com/BagServer/img/contact/maillist/p2.png" alt="..." style="height:40px;width:auto">
+                <i class="on md b-white bottom"></i>
+              </span>
+
+                    <span class="hidden-sm hidden-md ng-binding" ng-bind="userName">杨建波测试</span> <b class="caret"></b>
+                </a>
+                <!-- dropdown -->
+                <ul class="dropdown-menu animated fadeInRight w">
+                    <li ng-controller="ModalDemoCtrl" class="ng-scope">
+                        <script type="text/ng-template" id="myModalContent.html">
+                            <div  ng-include="'tpl/modal.html'" ></div>
+                        </script>
+
+                        <a ng-click="open()">修改密码</a>
+                    </li>
+                    <li ng-controller="logoffMoudle" class="ng-scope">
+                        <a ng-click="logoff()">注销</a>
+                    </li>
+                </ul>
+                <!-- / dropdown -->
+            </li>
+        </ul>
+        <!-- / navbar right -->
+
+    </div>
+    <!-- / navbar collapse -->
+
+
+</div>
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>
