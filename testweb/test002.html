@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>模仿公司首页做的效果图bag.89mc.com002--Theme Template for Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
-    <!--为了引入图片点击移动到图片上就能点击出效果的功能的-->
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <!--<link href="assets/libs/bootstrap.min.css" rel="stylesheet" />-->
+    <!--<link href="assets/libs/animate.min.css" rel="stylesheet" />
+    <link href="assets/libs/font-awesome.min.css" rel="stylesheet" />-->
+
+    <!--&lt;!&ndash;为了引入图片点击移动到图片上就能点击出效果的功能的&ndash;&gt;-->
+    <!--<link href="assets/css/style.css" rel="stylesheet" type="text/css" />-->
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="assets/css/gallery.css" rel="stylesheet">
 </head>
-<body>
+<body style="background: #F5F5F5;">
 <!--页面样式-->
 <div class="container theme-showcase" role="main">
     <!-- Fixed navbar -->
@@ -43,7 +49,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false" style="margin-left: 10px;">关于<span class="caret"
                                                                                     style="margin-left: 10px;"></span></a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu pull-right">
                             <li><a href="http://www.89mc.com/article-38-1.html">联系我们</a></li>
                             <li><a href="#" class="subject">意见反馈</a></li>
                             <li><a href="http://www.89mc.com/">关于我们</a></li>
@@ -83,22 +89,26 @@
                 <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="First slide [1140x500]"
                      src="pic/pic1.jpg"
                      data-holder-rendered="true">
+                <div class="carousel-caption">标题 1</div>
             </div>
             <div class="item active">
                 <img data-src="holder.js/1140x500/auto/#666:#444/text:Second slide" alt="Second slide [1140x500]"
                      src="pic/pic2.jpg"
                      data-holder-rendered="true">
+                <div class="carousel-caption">标题 2</div>
             </div>
             <div class="item">
                 <img data-src="holder.js/1140x500/auto/#555:#333/text:Third slide" alt="Third slide [1140x500]"
                      src="pic/pic3.jpg"
                      data-holder-rendered="true">
+                <div class="carousel-caption">标题 3</div>
             </div>
             <div class="item">
                 <img id="img_5_xiaomi" data-src="holder.js/1140x500/auto/#555:#333/text:Third slide"
                      alt="Third slide [1140x500]"
                      src="pic/pic5.jpg"
                      data-holder-rendered="true">
+                <div class="carousel-caption">标题 4</div>
             </div>
         </div>
         <!--data-slide="prev" 前一页
@@ -191,87 +201,105 @@
     <!-- /.modal -->
 </div>
 <!-- 模态框（Modal）end -->
-
-    <h4>Another caption style</h4>
-
+    <div class="box-info animated fadeInDown">
+    <h4>小米的商品抢购</h4><!-- style="background: orange;"-->
     <div class="gallery-wrap">
-        <div class="column">
-            <div class="inner">
+        <div class="column"  style="width: 200px;height: 150px;background: #FFCE00; margin: 10px;" >
+            <!--<div class="inner">--><!--否则就不能显示-->
                 <div class="img-frame">
-                    <a class="zooming" href="images/big/img006.jpg" title="Image title here">
+                    <a class="zooming" href="http://item.mi.com/1164400025.html" target="_blank" title="Image title here">
                         <div class="img-wrap">
-                            <img src="images/small/img006_small.jpg" alt="Image gallery"
-                                 title="Image title here" class="mfp-fade">
+                            <img src="images/xiaomi/xiaomi1.png" style="width: 220px;height: 100px"  alt="Image gallery"
+                                 title="00000" class="mfp-fade">
+                            <span>红米Note 4X 标准高透贴膜</span>
                         </div>
                         <div class="caption-hover">
-                            Hi, I'm a caption!
+                            <span> 1.8万人评价</span>
                         </div>
                     </a>
                 </div>
-            </div>
         </div>
         <div class="column">
-            <div class="inner">
-                <div class="img-frame success">
-                    <a class="zooming" href="images/big/img007.jpg" title="Image title here">
-                        <div class="img-wrap">
-                            <img src="images/small/img007_small.jpg" alt="Image gallery"
+            <div class="inner" style="width: 210px;height: 150px;background: cornflowerblue" >
+                <div class="img-frame warning"  style="width: 210px;height: 150px;">
+                    <a class="zooming" href="http://item.mi.com/1153900007.html" target="_blank" title="Image title here"  style="width: 200px;height: 150px;">
+                        <div class="img-wrap" style="width: 200px;height: 150px;background: white">
+                            <img src="images/xiaomi/xiaomi2.png" style="width: 200px;height: 100px" alt="Image gallery"
                                  title="Image title here" class="mfp-fade">
+                            <span style="display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">小米手机4c 小米4c 只能唤醒翻盖..</span>
+                            <div class="pull-right" style="color: orange">29元</div>
+                            <div class="pull-left" style="color:gray;"  >2.4万评价</div>
                         </div>
-                        <div class="caption-hover success">
-                            Hi, I'm a caption!
+                        <div class="caption-hover warning">
+                           <span style="display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">如果小米商城有卖钢化膜的就好了 这种膜好像有点薄 不是完全把屏幕贴完的那种
+                                好像现在好多手机膜都是这种的 还是比较满意了 在其它地方买害怕不服帖 还是在小米商城买好点</span>
+                            <span> 来自于 799848396 的评价 </span>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="column">
-            <div class="inner">
+        <div class="column" >
+            <div class="inner" style="width: 200px;height: 150px;background: #FFCE00;color:white;">
                 <div class="img-frame warning">
-                    <a class="zooming" href="images/big/img008.jpg" title="Image title here">
+                    <a class="zooming" href="http://item.mi.com/1162000043.html" target="_blank" title="Image title here">
                         <div class="img-wrap">
-                            <img src="images/small/img008_small.jpg" alt="Image gallery"
+                            <img src="images/xiaomi/xiaomi3.png" style="width: 200px;height: 100px" alt="Image gallery"
                                  title="Image title here" class="mfp-fade">
                         </div>
                         <div class="caption-hover warning">
-                            Hi, I'm a caption!
+                            <span> 手感不佳，太厚外观一般</span>
                         </div>
                     </a>
                 </div>
+                <span>红米Note 4X 标准高透贴膜</span>
+                <span>红米Note 4X 标准高透贴膜</span>
+                <span>红米Note 4X 标准高透贴膜</span>
+            </div>
+
+        </div>
+        <div class="column">
+            <div class="inner" style="width: 220px;height: 150px;background: white;">
+                <!--<div class="img-frame danger">--><!--class="img-frame"这个就是外面一圈的边框-->
+                    <a class="zooming" href="http://item.mi.com/1161300035.html" style="width: 200px;height: 150px;background: white;" target="_blank"  title="Image title here">
+                        <div class="img-wrap" style="width: 220px;height: 150px;background: white;">
+                            <img src="images/xiaomi/xiaomi4.png" alt="Image gallery"
+                                 title="Image title here" class="mfp-fade" style="width: 200px;height: 100px;">
+                            <span style="display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                小米自拍杆（线控版）采用3.5mm 音频线控制，无需连接蓝牙，无需充电，即插即用</span>
+                            <div class="pull-right" style="color: orange">49元</div>
+                            <div class="pull-left" style="color:gray;"  >7648评价</div>
+                        </div>
+                        <div class="caption-hover warning">
+                            <span style="display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                很不错很不错很不错很不错，东西很结实，用起来手感也很好，很方便使用的时候</span>
+                        </div>
+                    </a>
+                <!--</div>-->
             </div>
         </div>
         <div class="column">
-            <div class="inner">
-                <div class="img-frame danger">
-                    <a class="zooming" href="images/big/img009.jpg" title="Image title here">
-                        <div class="img-wrap">
-                            <img src="images/small/img009_small.jpg" alt="Image gallery"
+            <div class="inner" style="width: 200px;height: 150px;background: cornflowerblue" >
+            <!--    <div class="img-frame success"  style="width: 210px;height: 150px;">-->
+                    <a class="zooming" href="http://item.mi.com/1163500025.html" target="_blank" title="Image title here"  style="width: 200px;height: 150px;">
+                        <div class="img-wrap" style="width: 200px;height: 150px;background: white">
+                            <img src="images/xiaomi/xiaomi5.png" style="width: 200px;height: 100px" alt="Image gallery"
                                  title="Image title here" class="mfp-fade">
                         </div>
-                        <div class="caption-hover danger">
-                            Hi, I'm a caption!
+                        <div class="caption-static warning">
+                           <span style="display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: white;">
+                               喜欢钢化膜:caption-static caption-hover</span>
+                            <div class="pull-right" style="color: white;">15元</div>
+                            <div class="pull-left" style="color:white;"  >50066万评价</div>
                         </div>
                     </a>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="inner">
-                <div class="img-frame info">
-                    <a class="zooming" href="images/big/img010.jpg" title="Image title here">
-                        <div class="img-wrap">
-                            <img src="images/small/img010_small.jpg" alt="Image gallery"
-                                 title="Image title here" class="mfp-fade">
-                        </div>
-                        <div class="caption-hover info">
-                            Hi, I'm a caption!
-                        </div>
-                    </a>
-                </div>
+                <!--</div>-->
             </div>
         </div>
     </div>
+    </div>
 
+    <div style="margin-bottom: 100px"></div>
 <footer>
     Huban Creative © 2014
     <div class="footer-links pull-right">
@@ -279,8 +307,10 @@
             href="#">Help</a><a href="#">Contact Us</a>
     </div>
 </footer>
+    <div style="margin-bottom: 10px"></div>
 
 </div>
+
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
