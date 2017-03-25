@@ -4,12 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>从样式开始测试00</title>
+    <!--<script src='jquery-3.1.1.min.js'></script>-->
+    <!--<script src='../jquery-2.1.0.js'></script>-->
+    <!--字体库：file:///D:/89mc文件/平时文档/download/font_6hm4p5ql8s13jtt9/demo_fontclass.html-->
+    <!-- <link rel="stylesheet" type="text/css" href="../css/iconfont.css">
+     <link rel="stylesheet" href="//at.alicdn.com/t/font_zg5rtrimrmvon7b9.css">-->
 </head>
 <body>
 <script type="text/javascript" src="../jquery-2.1.0.js"></script>
 <script type="text/javascript">
 
     window.onload = function () {
+
+//        var xx = document.getElementsByTagName('body')[0].innerHTML.getElementsByTagName('video')[0];
+        var xx = document.getElementsByTagName('video')[0];
+        console.log("==打印它的所有的标签="+xx.outerHTML);
+
         var videoBox = document.getElementById("video_box");
         var videoId = document.getElementById("video_id");
         var progressLine = document.getElementById("progress_line");
@@ -24,14 +34,19 @@
         var currentTimeId = document.getElementById("current_time_id");
         var totalTimeId = document.getElementById("total_time_id");
         var showTipId = document.getElementById("id_tip_show");
-        var timer = null;
-        var timerhid = null;
 
-        var screenW = 0;
+
+
+        var timer = null;//播放的一秒刷新一次
+//        var timerdjs = null;//播放时倒计时几秒钟把页面去掉
+        var timerhid = null;//播放时倒计时几秒钟把页面去掉
+
+        var screenW = 0;//这是变量
         var screenH = 0;
-        var screenW0 = document.documentElement.clientWidth;
+        var screenW0 = document.documentElement.clientWidth;//这是定量
         var screenH0 = document.documentElement.clientHeight;
-        screenW = screenW0;
+//        alert("竖屏=012=="+screenH0+"===="+screenW0);//588--393  636-393  660 393
+        screenW = screenW0;//这是变量
         screenH = screenH0;
         changeVideoW();
         otherCaulue();
@@ -40,18 +55,28 @@
             if ("全屏" == fullId.innerHTML) {
                 fullId.innerHTML = "小屏";
                 changeVideoH();
+//                window.location.reload();
+//                alert("---ganhane--")
             } else if ("小屏" == fullId.innerHTML) {
                 fullId.innerHTML = "全屏";
                 changeVideoS();
+//                alert("---ganhane--")
             }
+
         }
         titleId.onclick = function () {
             window.location.reload();
         }
+        /*屏幕切换*/
         window.addEventListener('orientationchange', function (event) {
+            //第一次不调用事件，之和调用事件
             if (window.orientation == 180 || window.orientation == 0) {
                 screenW = screenW0;
                 screenH = screenH0;
+//                screenW = 393;
+//                 screenH = 660;
+//                alert("竖屏==="+screenH0+"===="+screenW0);//321--663  663-369
+                //changeOriP(screenH,screenW)
                 fullId.hidden = false;
                 changeVideoH();
                 changeVideoW();
@@ -59,28 +84,63 @@
             }
             if (window.orientation == 90 || window.orientation == -90) {
 
-                screenW = screenH0 + 55;
-                screenH = screenW0;
+                screenW = screenH0 + 55;//获取的值得调换--减去边框的间距+2
+                screenH = screenW0;//减去边框的间距-2
+//                screenW = 662//获取的值得调换--减去边框的间距
+//                screenH =  391;//减去边框的间距
+//                alert("横屏12==="+screenH0+"===="+screenW0);//591-393  393-639
                 fullId.innerHTML = "小屏";
                 fullId.hidden = true;
+//                changeOriL();
                 changeVideoH();
                 changeVideoW();
                 otherCaulue();
             }
         });
 
+        /***
+         * 竖屏时获取手机的长和宽
+         * 通过获取手机的尺寸以此设置视频的宽度；
+         * @author yjbo
+         */
         function changeVideoW() {
-            videoBox.style.width = screenW + "px";
-            header.style.width = screenW + "px";
-            footer.style.width = screenW + "px";
+            //根据屏幕进行尺寸配置
+            videoBox.style.width = screenW + "px";//2是边框的宽度左右2边之和- 2
+            header.style.width = screenW + "px";//2是边框的宽度左右2边之和 -2
+            footer.style.width = screenW + "px";//2是边框的宽度左右2边之和 -2
             progressLine.style.width = screenW - progressLine.offsetLeft * 2 + "px";
+
         }
+
+        /***
+         * 竖屏的大屏---竖屏使用1
+         * 设置视频的全屏模式的高度；
+         * @author yjbo
+         */
         function changeVideoH() {
+            //根据屏幕进行尺寸配置
             videoBox.style.height = screenH + "px";
             videoId.style.height = screenH - videoId.offsetLeft * 2 + "px";
         }
 
+        /***
+         * 竖屏的大屏---横屏使用2
+         * 设置视频的全屏模式的高度；
+         * @author yjbo
+         */
+        function changeVideoH2() {
+            //根据屏幕进行尺寸配置
+            videoBox.style.height = screenH + "px";//这里得减去手机的状态栏的宽度，高度
+            videoId.style.height = screenH + "px";
+        }
+
+        /***
+         * 竖屏的小屏
+         * 设置视频的全屏模式的高度；
+         * @author yjbo
+         */
         function changeVideoS() {
+            //根据屏幕进行尺寸配置
             videoBox.style.height = 240 + "px";
             videoId.style.height = 220 + "px";
             changeVideoW();
@@ -91,12 +151,15 @@
         var total;
 
         function otherCaulue() {
-            var vidBoxW = videoBox.width || videoBox.offsetWidth || videoBox.clientWidth || videoBox.scrollWidth;
+            //算法
+            var vidBoxW = videoBox.width || videoBox.offsetWidth || videoBox.clientWidth || videoBox.scrollWidth;//取第一个
             videoId.style.width = vidBoxW - 20 + "px";
+            /*var wid = progressBox.style.width || progressBox.width || progressBox.offsetWidth || progressBox.clientWidth || progressBox.scrollWidth + videoBox.border.width;*/
             test = progressImg.offsetLeft;
             total = progressLine.offsetWidth + progressImg.offsetLeft;
         }
 
+        //点击事件
         backId.onclick = function () {
             test = test + 5;
             if (test > total) {
@@ -106,13 +169,20 @@
         }
 
 
+        /*--------------------------------------加入点击事件------2017年3月13日23:25:17-------------------------------------*/
         videoId.controls = false;
         videoId.poster = "http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg";
         changeProgress();
 
+        /*视频元素加载完之后，进行获取视频的数据---设置总时间长度*/
         videoId.addEventListener("canplay", function () {
+            /*这是 视频的时间进度*/
             totalTimeId.innerHTML = toCustomTime(Math.floor(videoId.duration));
             nowtime();
+            /*这是音量键的进度条*/
+            /*这边音量弄错了，应该是手机系统的音量，而不是html的视频音量http://www.cnblogs.com/maxinliang/archive/2013/07/02/3167212.html*/
+//            voiceinner.style.top = (voiceouter.offsetHeight - voiceinner.offsetHeight) * (1 - video1.volume) + "px";
+
             showTipId.hidden = true;
 
             videoId.style.width = (videoBox.offsetWidth) + 'px';
@@ -125,32 +195,49 @@
                 seektime(0, 1);
             }
         }
-        videoId.onwaiting = function () {
+        videoId.onwaiting = function () {//视频正在缓冲中
             showTipId.hidden = false;
             showTipId.innerHTML = "正在加载中...";
         }
-        videoId.onplaying = function () {
+        videoId.onplaying = function () {//视频缓冲结束，播放了
             showTipId.innerHTML = "加载完成";
             showTipId.hidden = true;
         }
+        /*拖动进行变化*/
         function seektime(seeknow, seektotal) {
             videoId.currentTime = seeknow * videoId.duration / seektotal;
-            if (!videoId.paused) {
+            if (!videoId.paused) {//先初始化暂停
                 videoId.pause();
             }
             changeSeekPlay();
         }
 
+        /*播放按钮*/
         imgPlay.onclick = function () {
             changeClickPlay();
         }
         playId.onclick = function () {
             changeClickPlay();
         }
+        /****
+         * 现在视频页面的逻辑是：
+         *      1.播放时：点击一下，显示头尾布局3秒之后隐藏；但是屏幕中间的播放键在暂停时不隐藏；
+         *      2.暂停时：点击一下，显示头尾布局3秒之后隐藏；但是屏幕中间的播放键在暂停时不隐藏；
+         *      *播放时：3秒钟之后就隐藏头尾部；暂停时，只有点击才能隐藏头尾部；
+         * 2017年3月18日18:32:57
+         * @author yjbo
+         * */
         videoId.onclick = function () {
             showTopButtomBJ();
         }
 
+        /****
+         * 现在点击暂停、播放按钮的逻辑是：不管是播放还是暂停状态，
+         * 都3秒后隐藏头、尾部；但是屏幕中间的播放键在暂停时不隐藏；
+         * 2017年3月18日18:32:57
+         * @author yjbo
+         * */
+        //这是点击播放按钮、暂停按钮的事件
         function changeClickPlay() {
             imgPlay.hidden = true;
             if (videoId.paused) {
@@ -177,6 +264,7 @@
             footer.hidden = true;
         }
 
+        /*播放按钮，已经拖动时走这里*/
         function changeSeekPlay() {
             if (videoId.paused) {
                 videoId.play();
@@ -190,47 +278,61 @@
             }
         }
 
+        /*播放到什么地方*/
         function nowtime() {
             currentTimeId.innerHTML = toCustomTime(Math.floor(videoId.currentTime));
             progressImg.style.left = (videoId.currentTime * (progressLine.offsetWidth - progressImg.offsetWidth) / videoId.duration) + "px";
         }
 
+        /*这是跳转视频播放进度*/
         function changeProgress() {
             progressLine.addEventListener('touchstart', touchSatrt, false);
             progressLine.addEventListener('touchmove', touchMove, false);
             progressLine.addEventListener('touchend', touchEnd, false);
             var disX = 0;
-            var startX,
-                x,
-                aboveX = 0;
+            var startX,//触摸时的坐标
+//                    startY,
+                x, //滑动的距离
+//                    y,
+//                    aboveY=0; //设一个全局变量记录上一次内部块滑动的位置
+                aboveX = 0; //设一个全局变量记录上一次内部块滑动的位置
 
 
-            function touchSatrt(e) {
+            function touchSatrt(e) {//触摸
                 e.preventDefault();
                 var touch = e.touches[0];
+                //startY = touch.pageY;   //刚触摸时的坐标
                 startX = touch.pageX;
             }
 
-            function touchMove(e) {
+            function touchMove(e) {//滑动
                 e.preventDefault();
                 var touch = e.touches[0];
+                // y = touch.pageY - startY;//滑动的距离
                 x = touch.pageX - startX;
-                var finalX = aboveX + x;
+                //  inner.style.top=aboveY+y+"px"; //这一句中的aboveY是inner上次滑动后的位置
+                var finalX = aboveX + x;//最终x轴的坐标
                 if (finalX < 0) {
                     finalX == 0;
                 } else if (x > progressLine.offsetWidth - progressImg.offsetWidth) {
                     finalX == progressLine.offsetWidth - progressImg.offsetWidth;
                 }
                 progressImg.style.left = finalX + "px";
+                /*  /!*设置时间*!/
+                 video1.currentTime = finalX * video1.duration /(outer.offsetWidth - inner.offsetWidth);*/
                 seektime(finalX, progressLine.offsetWidth - progressImg.offsetWidth);
             }
 
-            function touchEnd(e) {
+            function touchEnd(e) {//手指离开屏幕
                 e.preventDefault();
+                // aboveY=parseInt(inner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;
                 aboveX = parseInt(progressImg.style.left);
-            }
+            }//
         }
 
+        /**
+         * 将时间转换为正常时间
+         * */
         function toCustomTime(number) {
             number = parseInt(number);
             var finaltime = "00:00";
@@ -258,24 +360,58 @@
             }
         }
 
+//播放时：3秒钟之后就隐藏头尾部；暂停时，只有点击才能隐藏头尾部；
         var showTopButtomBJ = function () {
+//            imgPlay.hidden = true;
+//            if (videoId.paused) {//暂停时
             if (timerhid != null){clearTimeout(timerhid);}
 
-                if(videoId.paused) {
-                    imgPlay.hidden = false;
-                }else {
-                    imgPlay.hidden = true;
-                    timerhid = setTimeout(hidTB, 3000);
-                }
-                if (header.hidden){
-                    header.hidden = false;
-                    footer.hidden = false;
-                }else {
-                    header.hidden = true;
-                    footer.hidden = true;
-                }
-            };
+            if(videoId.paused) {//暂停时
+                imgPlay.hidden = false;
+            }else {
+                imgPlay.hidden = true;
 
+//                    if (timerhid != null){clearTimeout(timerhid);}
+                timerhid = setTimeout(hidTB, 3000);
+            }
+            if (header.hidden){
+                header.hidden = false;
+                footer.hidden = false;
+
+//                    if (timerhid != null){clearTimeout(timerhid);}
+//                    timerhid = setTimeout(hidTB, 3000);
+            }else {
+                header.hidden = true;
+                footer.hidden = true;
+            }
+
+//            }else {//播放时
+//
+//                header.hidden = false;
+//                footer.hidden = false;
+//                imgPlay.hidden = false;
+//                if (timerhid != null){clearTimeout(timerhid);}
+//                timerhid = setTimeout(hidTB, 3000);
+//            }
+        };
+
+        //测试一下：在视频上添加阴影2017年3月19日11:41:37
+        var y_mask = "<div  class='masks' style='background: #000000; width:100%;height:100%; position:absolute;z-index:1000000;top:0;left:0;" +
+            "filter:alpha(opacity=50);  /*支持 IE 浏览器*/ -moz-opacity:0.5; /*支持 FireFox 浏览器*/opacity:1.00;  /*支持 Chrome, Opera, Safari 等浏览器*/'>你好吗？</div>";
+        var videoJ0Par = $("video").parent();
+        videoJ0Par.append(y_mask);
+        var message = document.getElementsByTagName('video')[0];
+        /*alert("1111");*/
+//        var videoJ0Par = videoId.parent;
+//        videoJ0Par.appendChild(y_mask)
+//       var jsappend = function() {
+//            return this.domManip( arguments, function( elem ) {
+//                if ( this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9 ) {
+//                    var target = manipulationTarget( this, elem );
+//                    target.appendChild( elem );
+//                }
+//            });
+//        }
     }
 
 </script>
@@ -293,6 +429,7 @@
         position: absolute;
     }
 
+    /*width: 391px;border: 0px solid #000000;*/
     #video_id {
         height: 240px;
         background: black;
@@ -305,6 +442,7 @@
         top: 0px;
     }
 
+    /*width: 391px;*/
     #footer {
         height: 50px;
         background: black;
@@ -312,6 +450,7 @@
         bottom: 0px;
     }
 
+    /*width: 391px;*/
     #progress_line {
         height: 5px;
         background: gray;
@@ -319,6 +458,7 @@
         position: absolute
     }
 
+    /*width: 373px;*/
     #progress_img {
         height: 15px;
         width: 15px;
@@ -342,6 +482,7 @@
         margin: auto;
     }
 
+    /*参考：http://blog.csdn.net/freshlover/article/details/11579669*/
     #id_tip_show {
         position: absolute;
         left: 0;
@@ -364,6 +505,7 @@
             class="video"></video>
     <div id="header">
         <div id="back_id" style="color: red;float: left;padding: 5px;">《返回</div>
+        <!--display: inline-block;width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; 只显示前固定宽度的字数，其余的按...-->
         <div id="title_id" style="color: red;float: left;padding: 5px 0px 5px 10px;
          display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">标题：1234567890abcdefghijklmnopqrstuvwxyz</div>
     </div>

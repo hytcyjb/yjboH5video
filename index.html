@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
+<!--
+   2017年3月23日19:49:59；浏览器兼容视频播放的功能在这里使用：
+   1.//js设置透明度方法https://zhidao.baidu.com/question/263581623.html
+   2./*html5 video 标签 怎样禁止拖动或者点击进度条 https://zhidao.baidu.com/question/1959286878571632540.html*/
+   3./*div设置背景半透明 https://zhidao.baidu.com/question/1817594324651573788.html*/
+   4./*获取缓存的时间范围 http://www.runoob.com/tags/av-prop-buffered.html  */
+-->
 <!-- 土豆的flash视频播放  http://www.tudou.com/listplay/M5mzPZx_Rqg/8hhyKS7ekHY/?spm=a2h1r.8267915.m1269.5~5!2~5!2~5~5~A-->
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>我第一次使用HBuilder软件</title>
-
 </head>
-
 <body>
 <!--<body onload='videoReginsClick("首页哦")'> 这样就直接在body添加了js事件-->
 <script src="test.js" type="text/javascript" charset="utf-8"></script>
@@ -18,9 +22,7 @@
 <div id="first" style=" align-content: center; background: #00fff0;
 	width: 100%; height: 500px;  align-items: center; text-align: center; );">
     <img id="firstImg" onclick="imgClick(src)" src="img/blogger_panda_128px_534223_easyicon.net.png"/>
-    <!--<div id="firstText"  style="background: #f000ff; width: 150px;height: 100%; text-align: center;">我第一次使用HBuilder软件0</div>-->
     <div id="video_box" style="width: 100%;height: 242px;position: relative">
-        <!-- poster="http://image.89mc.com/bjd/knowledge/img/cabc648d-9f9f-41d6-9298-f739bb0dda16.jpg"-->
         <video controls="controls" preload
                id="video0"
                src="http://video.89mc.com/bjd/knowledge/video/491b31a8-8198-4662-be92-35f46da17392.mp4"
@@ -50,75 +52,87 @@
 
 <script type="text/javascript">
     var video1 = document.getElementsByTagName("video")[0];
-    /*html5 video 标签 怎样禁止拖动或者点击进度条 https://zhidao.baidu.com/question/1959286878571632540.html*/
-    /*div设置背景半透明 https://zhidao.baidu.com/question/1817594324651573788.html*/
-//    var maskW = video1.clientWidth;
-//    var maskH = video1.clientHeight;
-//    alert(maskW+"==="+maskH) onclick='videoReplaceClick()'
-
-    var y_mask = "<div  class='masks' style='background: #000000; width:100%;height:100%; position:absolute;z-index:1000000;top:0;left:0;" +
-        "filter:alpha(opacity=50);  /*支持 IE 浏览器*/ -moz-opacity:0.5; /*支持 FireFox 浏览器*/opacity:0.0;  /*支持 Chrome, Opera, Safari 等浏览器*/'>你好吗？</div>";
-    /* video1.parent().append(y_mask) */
-    /* video1.parent().append(y_mask); */
+//    var y_mask = "<div  class='masks' style='background: #000000; width:100%;height:100%; position:absolute;z-index:1000000;top:0;left:0;" +
+//        "filter:alpha(opacity=50);  /*支持 IE 浏览器*/ -moz-opacity:0.5; /*支持 FireFox 浏览器*/opacity:0.3;  /*支持 Chrome, Opera, Safari 等浏览器*/'>你好吗？</div>";
+    var y_mask = "<div id=\"yjboyy_video_box\" style=\"overflow: hidden;background: red\">\n" +
+        "    <video\n" +
+        "            id=\"video_id\" preload\n" +
+        "            src=\"http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4\"\n" +
+        "            poster=\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489288875&di=c25af3ef4886eb3a20aa4e9bb1817824&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F15%2F62%2F29%2F07k58PICEPT_1024.jpg\"\n" +
+        "            class=\"video\"></video>\n" +
+        "    <div id=\"header\">\n" +
+        "        <div id=\"back_id\" style=\"color: red;float: left;padding: 5px;\">《返回</div>\n" +
+        "        <!--display: inline-block;width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; 只显示前固定宽度的字数，其余的按...-->\n" +
+        "        <div id=\"title_id\" style=\"color: red;float: left;padding: 5px 0px 5px 10px;\n" +
+        "         display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;\">标题：1234567890abcdefghijklmnopqrstuvwxyz</div>\n" +
+        "    </div>\n" +
+        "    <div id=\"footer\">\n" +
+        "        <div id=\"progress_line\">\n" +
+        "            <img src=\"../img/round_16px.png\" id=\"progress_img\">\n" +
+        "        </div>\n" +
+        "        <div style=\" width: 100%;margin:  15px 0px;\">\n" +
+        "            <div id=\"play_id\">播放</div>\n" +
+        "            <div id=\"current_time_id\" style=\"color: red;float: left;padding: 5px;\">00:00:00</div>\n" +
+        "            <div style=\"color: red;float: left;padding: 5px;\">/</div>\n" +
+        "            <div id=\"total_time_id\" style=\"color: red;float: left;padding: 5px;\">00:00:00</div>\n" +
+        "            <div id=\"full_id\" style=\"color: red;float: right;padding: 5px;\">全屏</div>\n" +
+        "        </div>\n" +
+        "    </div>\n" +
+        "    <img src=\"../img/Play_Disabled_64px_560451_easyicon.net.png\" id=\"img_play\">\n" +
+        "    <div id=\"id_tip_show\" ; hidden=true;></div>\n" +
+        "</div>";
     var videoJ0 = $("video").eq(0);
     var videoJ0Par = videoJ0.parent();
-//    video1.height = videoJ0Par.clientHeight;
-//    video1.width = videoJ0Par.clientWidth;
-
     videoJ0Par.append(y_mask);
-    console.log("=-="+video1.height+"====="+video1.width+"=====");
-   //!* 添加视频控件上的点击事件 *!/
+    console.log("=-=" + video1.height + "=====" + video1.width + "=====");
+    //!* 添加视频控件上的点击事件 *!/
     $("body").on("click", ".masks", function () {
-        console.log("==000==" + video1.src);
-        /*获取缓存的时间范围 http://www.runoob.com/tags/av-prop-buffered.html  */
-//        console.log("Start: " + video1.buffered.start(0) + " End: " + video1.buffered.end(0));
-        console.log("替换视频标签");
-
-//        var message = document.getElementById("video0");
+        var videoJ0 = $(".masks").eq(0);
+        var videoparent = videoJ0.parent();
         var message = document.getElementsByTagName('video')[0];
-        if (message == null){//说明替换了，则播放视频
-            var newVideo = document.getElementById("newVideo");
-            newVideo.pause();
+        var replaceFirst_var = document.getElementsByTagName('replaceFirst')[0];
+        if (replaceFirst_var != null) {
             return;
+        } else {
+            var masks11 = $(".masks").eq(0);
+            masks11.css({opacity: 0.7});
         }
-         var para = document.createElement("replaceFirst");
-        //添加 img
+        var para = document.createElement("replaceFirst");
         var videoRep = document.createElement("video");
-        //设置 img 属性，如 id
         videoRep.setAttribute("id", "newVideo");
-        //设置 img 图片地址
         videoRep.src = "http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4";
-        videoRep.width = message.videoWidth;
-        videoRep.height = message.videoHeight;
-        videoRep.height = message.height;
-        videoRep.height = message.offsetHeight;
-        videoRep.height = message.clientHeight;
-        videoRep.height = message.clientWidth;
+        videoRep.width = videoparent[0].clientWidth;
+        videoRep.height = videoparent[0].clientHeight;
 
         videoRep.controls = "controls";
-        //videoRep.poster = message.poster;
-         para.clientWidth = message.videoWidth;
-         para.clientHeight = message.videoHeight;
-         var video1Parent =  $("video").eq(0).parent();
-        console.log("=-="+video1.height+"====="+video1.width+"====="+video1Parent.outerHeight()+"----"+video1Parent.outerWidth()+"====="+video1Parent.innerHeight()+"====="+video1Parent.innerWidth()+"----"+video1Parent.clientHeight
-        +"======"+y_mask.offsetWidth+"===="+y_mask.width+"===="+y_mask.clientHeight+"====" + "-----" + message.width + "=------" + message.height+"==="+
-           message.videoHeight+"==="+message.videoWidth+"------"+message.clientHeight+"==="+message.clientWidth+"=====-----"+message.offsetHeight+"==="+message.offsetWidth+"====")
+        para.clientWidth = videoparent[0].clientWidth;
+        para.clientHeight = videoparent[0].clientHeight;
+        var video1Parent = $("video").eq(0).parent();
         para.appendChild(videoRep);
         message.parentNode.replaceChild(para, message);
-        //视频控件替换完成,直接可播放
         var newVideo = document.getElementById("newVideo");
-        newVideo.play();
-
+        if (newVideo != null) {
+            newVideo.play();
+            masks11.css({opacity: 0.0});
+        } else {
+            alert("标签没有呢不了")
+        }
     })
-
-    $("body").on("click", ".video", function () {
-        alert("==="+video1.height+"===="+video1.height+"===="+video1.currentTime);
-    })
-    /*video1.addEventListener("progress",
-     function() {
-     alert("Downloading video");
-     }
-     );*/
+    //注意点：
+    //1.需要判断控件是否存在；
+//    2.判断控件的高和宽，并进行赋值；
+    //2017年3月23日20:58:11 不放在手机上的2017年3月23日20:58:17
+    //        var message = document.getElementsByTagName('video')[0];
+    //        if (message == null){
+    //            var newVideo = document.getElementById("newVideo");
+    //            newVideo.pause();
+    //            return;
+    //        }
+    //    var videoJ0 = $(".masks").eq(0);
+    //    var videoJ0Par = videoJ0.parent();
+    //        videoJ0Par.append(para);
+    //            videoJ0Par.css({opacity:0.0});
+    //            videoJ0Par.css({background:'#0000000'});
 </script>
 </body>
 
