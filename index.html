@@ -22,11 +22,14 @@
 <div id="first" style=" align-content: center; background: #00fff0;
 	width: 100%; height: 500px;  align-items: center; text-align: center; );">
     <img id="firstImg" onclick="imgClick(src)" src="img/blogger_panda_128px_534223_easyicon.net.png"/>
-    <div id="video_box" style="width: 100%;height: 242px;position: relative">
-        <video controls="controls" preload
+    <div id="video_box" style="width: 80%;height: 182px;position: relative;background: red">
+        <video controls="controls" preload style="width: 50%;height: 142px;position: relative;background: blue"
                id="video0"
                src="http://video.89mc.com/bjd/knowledge/video/491b31a8-8198-4662-be92-35f46da17392.mp4"
-               onwaiting="waitingClick()" class="video" ontimeupdate="timeupdateClick()"></video>
+               onwaiting="waitingClick()" class="video" ontimeupdate="timeupdateClick()">
+        </video>
+
+        <div>你好呀你呀你好呀你呀你好呀你呀你好呀你呀你好呀你呀你好呀你呀</div>
     </div>
 
     <span style="color: rgb(255, 0, 0);">   </span>
@@ -43,7 +46,7 @@
 
 </div>
 <!--		<p style="margin-top: 200px;>视频一当前播放位置： <span id="demo"></span></p>-->
-<div id="demo" style="margin-top: 200px; background: #99ff99;">播放的时间</div>
+<div id="demo" style="margin-top: 200px; background: #99ff99;">播放的时间0</div>
 <div id="second" onclick="secondClick('1234')" style="margin-top: 20px; background: #99ff99;">替换上面的div</div>
 <div id="third1" onclick="videoClick('1234') " style="margin-top: 20px; background: #29B4ED;">获取视频信息</div>
 <div id="third2" onclick="videoSeekClick('180')">跳到180S处</div>
@@ -52,35 +55,8 @@
 
 <script type="text/javascript">
     var video1 = document.getElementsByTagName("video")[0];
-//    var y_mask = "<div  class='masks' style='background: #000000; width:100%;height:100%; position:absolute;z-index:1000000;top:0;left:0;" +
-//        "filter:alpha(opacity=50);  /*支持 IE 浏览器*/ -moz-opacity:0.5; /*支持 FireFox 浏览器*/opacity:0.3;  /*支持 Chrome, Opera, Safari 等浏览器*/'>你好吗？</div>";
-    var y_mask = "<div id=\"yjboyy_video_box\" style=\"overflow: hidden;background: red\">\n" +
-        "    <video\n" +
-        "            id=\"video_id\" preload\n" +
-        "            src=\"http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4\"\n" +
-        "            poster=\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489288875&di=c25af3ef4886eb3a20aa4e9bb1817824&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F15%2F62%2F29%2F07k58PICEPT_1024.jpg\"\n" +
-        "            class=\"video\"></video>\n" +
-        "    <div id=\"header\">\n" +
-        "        <div id=\"back_id\" style=\"color: red;float: left;padding: 5px;\">《返回</div>\n" +
-        "        <!--display: inline-block;width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; 只显示前固定宽度的字数，其余的按...-->\n" +
-        "        <div id=\"title_id\" style=\"color: red;float: left;padding: 5px 0px 5px 10px;\n" +
-        "         display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;\">标题：1234567890abcdefghijklmnopqrstuvwxyz</div>\n" +
-        "    </div>\n" +
-        "    <div id=\"footer\">\n" +
-        "        <div id=\"progress_line\">\n" +
-        "            <img src=\"../img/round_16px.png\" id=\"progress_img\">\n" +
-        "        </div>\n" +
-        "        <div style=\" width: 100%;margin:  15px 0px;\">\n" +
-        "            <div id=\"play_id\">播放</div>\n" +
-        "            <div id=\"current_time_id\" style=\"color: red;float: left;padding: 5px;\">00:00:00</div>\n" +
-        "            <div style=\"color: red;float: left;padding: 5px;\">/</div>\n" +
-        "            <div id=\"total_time_id\" style=\"color: red;float: left;padding: 5px;\">00:00:00</div>\n" +
-        "            <div id=\"full_id\" style=\"color: red;float: right;padding: 5px;\">全屏</div>\n" +
-        "        </div>\n" +
-        "    </div>\n" +
-        "    <img src=\"../img/Play_Disabled_64px_560451_easyicon.net.png\" id=\"img_play\">\n" +
-        "    <div id=\"id_tip_show\" ; hidden=true;></div>\n" +
-        "</div>";
+    var y_mask = "<div  class='masks' style='background: #000000; width:100%;height:100%; position:absolute;z-index:1000000;top:0;left:0;" +
+        "filter:alpha(opacity=50);  /*支持 IE 浏览器*/ -moz-opacity:0.5; /*支持 FireFox 浏览器*/opacity:0.3;  /*支持 Chrome, Opera, Safari 等浏览器*/'>你好吗？</div>";
     var videoJ0 = $("video").eq(0);
     var videoJ0Par = videoJ0.parent();
     videoJ0Par.append(y_mask);
@@ -97,18 +73,152 @@
             var masks11 = $(".masks").eq(0);
             masks11.css({opacity: 0.7});
         }
-        var para = document.createElement("replaceFirst");
+        var para = document.createElement("div");
+        para.setAttribute("id","yjbo_p_div")
         var videoRep = document.createElement("video");
         videoRep.setAttribute("id", "newVideo");
         videoRep.src = "http://video.89mc.com/89mc/knowledge/video/93c2d547-e0a8-4559-89c5-bb4565e8bf8d.mp4";
         videoRep.width = videoparent[0].clientWidth;
         videoRep.height = videoparent[0].clientHeight;
-
+        alert("===" + videoRep.width);
         videoRep.controls = "controls";
         para.clientWidth = videoparent[0].clientWidth;
         para.clientHeight = videoparent[0].clientHeight;
         var video1Parent = $("video").eq(0).parent();
         para.appendChild(videoRep);
+
+
+            //text-overflow="white-space: nowrap";
+
+
+//        var tbdiv = "<div id='header' style='background: black;position: absolute;top: 0px;'>"+
+//        "<div id='back_id' style='color: red;float: left;padding: 5px;'>《返回</div>"+
+//            "<div id='title_id' style='color: red;float: left;padding: 5px 0px 5px 10px;"+
+//            "display: inline-block;width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>"+"标题：1234567890abcdefghijklmnopqrstuvwxy"+
+//        "</div>"+
+//        "</div>"+
+
+//        "<div id='footer' style=' height: 50px;background: black;position: absolute;bottom: 0px;'>"+
+//        "<div id='progress_line'  height: 5px;  background: gray; margin: 7px 10px; position: absolute>"+
+//        "<img src='../img/round_16px.png' id='progress_img' style='height: 15px;width: 15px;left: 0px;position: absolute;margin: -5px -5px;'>"+
+//        "</div>"+
+//        "<div style=' width: 100%;margin:  15px 0px;'>"+
+//        "<div id='play_id' style='color: red;float: left;padding: 5px;'>播放</div>"+
+//        "<div id='current_time_id' style='color: red;float: left;padding: 5px;'>00:00:00</div>"+
+//        "<div style='color: red;float: left;padding: 5px;'>/</div>"+
+//        "<div id='total_time_id' style='color: red;float: left;padding: 5px;'>00:00:00</div>"+
+//        "<div id='full_id' style='color: red;float: right;padding: 5px;'>全屏</div>"+
+//        "</div>"+
+//        "</div>"+
+//        "<img src='../img/Play_Disabled_64px_560451_easyicon.net.png' id='img_play' style='position: absolute;"+
+//        "left: 0;right: 0;top: 0;bottom: 0;margin: auto;'>"+
+//        "<div id='id_tip_show' ; hidden=true;></div>';";
+        var topDiv = document.createElement("div");
+        topDiv.setAttribute("id", "header");
+        topDiv.style.top = 0;
+        topDiv.style.background = "black";
+        topDiv.style.position = "absolute";
+        var back_id = document.createElement("div");
+        back_id.setAttribute("id", "back_id");
+        back_id.style.float = "left";
+        back_id.style.padding = "5px";
+        back_id.style.color = "red";
+        back_id.textContent = "返回";
+        var title_id = document.createElement("div");
+        title_id.setAttribute("id", "title_id");
+        title_id.style.float = "left";
+        title_id.style.padding = "5px 0px 5px 10px";
+        title_id.style.color = "red";
+        title_id.textContent = "1234567890abcdefghijklmnopqrstuvwxy";
+        title_id.style.display = "inline-block";
+        title_id.style.width="100px";
+        title_id.style.overflow="hidden";
+        title_id.style.textOverflow = "ellipsis";
+
+        topDiv.appendChild(back_id);
+        topDiv.appendChild(title_id);
+
+        var footDiv = document.createElement("div");
+        footDiv.setAttribute("id", "footer");
+        footDiv.style.height = "50px";
+        footDiv.style.bottom = 0;
+        footDiv.style.background = "black";
+        footDiv.style.position = "absolute";
+
+        var progress_line = document.createElement("div");
+        progress_line.setAttribute("id", "progress_line");
+        progress_line.style.height = "5px";
+        progress_line.style.background = "gray";
+        progress_line.style.margin = "7px 10px";
+        progress_line.style.position = "absolute";
+
+        var progress_img = document.createElement("div");
+        progress_img.setAttribute("id", "progress_img");
+        progress_img.style.src = "../img/round_16px.png";
+        progress_img.style.height = "15px";
+        progress_img.style.width = "15px";
+        progress_img.style.left = "0px";
+        progress_img.style.position = "absolute";
+        progress_img.style.margin = "-5px -5px;";
+
+        var play_id = document.createElement("div");
+        play_id.setAttribute("id", "play_id");
+        play_id.style.color = "red";
+        play_id.style.float = "left";
+        play_id.style.padding = "5px";
+        play_id.textContent = "播放";
+
+        var current_time_id = document.createElement("div");
+        current_time_id.setAttribute("id", "current_time_id");
+        current_time_id.style.color = "red";
+        current_time_id.style.float = "left";
+        current_time_id.style.padding = "5px";
+        current_time_id.textContent = "00:00:00";
+
+        var time_fgx_div = document.createElement("div");
+        time_fgx_div.style.color = "red";
+        time_fgx_div.style.float = "left";
+        time_fgx_div.style.padding = "5px";
+        time_fgx_div.textContent = "/";
+        var total_time_id = document.createElement("div");
+        total_time_id.setAttribute("id", "total_time_id");
+        total_time_id.style.color = "red";
+        total_time_id.style.float = "left";
+        total_time_id.style.padding = "5px";
+        total_time_id.textContent = "00:00:00";
+        var full_id = document.createElement("div");
+        full_id.setAttribute("id", "full_id");
+        full_id.style.color = "red";
+        full_id.style.float = "right";
+        full_id.style.padding = "5px";
+        full_id.textContent = "全屏";
+
+        footDiv.appendChild(progress_line);
+        footDiv.appendChild(progress_img);
+        footDiv.appendChild(play_id);
+        footDiv.appendChild(current_time_id);
+        footDiv.appendChild(time_fgx_div);
+        footDiv.appendChild(total_time_id);
+        footDiv.appendChild(full_id);
+
+//        var img_play = document.createElement("img");
+//        img_play.setAttribute("id", "img_play");
+//        img_play.style.src = "../img/Play_Disabled_64px_560451_easyicon.net.png";
+//        img_play.style.position = "absolute";
+//        img_play.style.left = "0";
+//        img_play.style.right = "0";
+//        img_play.style.top = "0";
+//        img_play.style.bottom = "0";
+//        img_play.style.margin = "auto";
+//        var id_tip_show = document.createElement("div");
+//        id_tip_show.setAttribute("id", "id_tip_show");
+//        id_tip_show.hidden = "true";
+
+        para.appendChild(topDiv);
+        para.appendChild(footDiv);
+//        para.appendChild(img_play);
+//        para.appendChild(id_tip_show);
+        alert("==="+para.outerHTML)
         message.parentNode.replaceChild(para, message);
         var newVideo = document.getElementById("newVideo");
         if (newVideo != null) {
@@ -120,7 +230,7 @@
     })
     //注意点：
     //1.需要判断控件是否存在；
-//    2.判断控件的高和宽，并进行赋值；
+    //    2.判断控件的高和宽，并进行赋值；
     //2017年3月23日20:58:11 不放在手机上的2017年3月23日20:58:17
     //        var message = document.getElementsByTagName('video')[0];
     //        if (message == null){
